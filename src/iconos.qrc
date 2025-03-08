@@ -1,0 +1,13 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icons/alejar.png</file>
+    <file>icons/acercarse.png</file>
+    <file>icons/js.png</file>
+    <file>icons/logo-logicflow.png</file>
+    <file>icons/boton-de-play.png</file>
+    <file>icons/carpeta-abierta.png</file>
+    <file>icons/detener.png</file>
+    <file>icons/documento.png</file>
+    <file>icons/rompecabezas.png</file>
+  </qresource>
+</RCC>

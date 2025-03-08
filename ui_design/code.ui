@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>660</width>
+    <height>615</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>661</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(201, 233, 210)</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>61</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 5px;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../src/iconos.qrc">:/icons/icons/logo-logicflow.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>10</y>
+      <width>366</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="btnExportar">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0,0,0,0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../src/iconos.qrc">
+         <normaloff>:/icons/icons/documento.png</normaloff>:/icons/icons/documento.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>80</width>
+         <height>80</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnCorrer">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0,0,0,0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../src/iconos.qrc">
+         <normaloff>:/icons/icons/boton-de-play.png</normaloff>:/icons/icons/boton-de-play.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnParar">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0,0,0,0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../src/iconos.qrc">
+         <normaloff>:/icons/icons/detener.png</normaloff>:/icons/icons/detener.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnAumentar">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0,0,0,0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../src/iconos.qrc">
+         <normaloff>:/icons/icons/acercarse.png</normaloff>:/icons/icons/acercarse.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnReducir">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(0,0,0,0);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../src/iconos.qrc">
+         <normaloff>:/icons/icons/alejar.png</normaloff>:/icons/icons/alejar.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QFrame" name="frame_Codigo">
+   <property name="geometry">
+    <rect>
+     <x>-10</x>
+     <y>80</y>
+     <width>681</width>
+     <height>531</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(254, 249, 242);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QPlainTextEdit" name="plainTextEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>661</width>
+      <height>541</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Fira Code SemiBold</family>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="plainText">
+     <string>function verificarNumero() {
+  let numero = parseInt(prompt(&quot;Introduce un número:&quot;));
+  
+  if (numero &gt; 10) {
+    alert(&quot;El número &quot; + numero + &quot; es mayor que 10.&quot;);
+  } else if (numero &lt; 10) {
+    alert(&quot;El número &quot; + numero + &quot; es menor que 10.&quot;);
+  } else {
+    alert(&quot;El número es igual a 10.&quot;);
+  }
+}
+
+function iniciar() {
+  let nombre = prompt(&quot;¿Cuál es tu nombre?&quot;);
+  alert(&quot;Hola, &quot; + nombre + &quot;! Vamos a verificar un número.&quot;);
+  
+  verificarNumero();
+}
+
+iniciar();
+</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../src/iconos.qrc"/>
+ </resources>
+ <connections/>
+</ui>
