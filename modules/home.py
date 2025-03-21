@@ -20,6 +20,7 @@ from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
     QStatusBar, QWidget, QFileDialog)
 import iconos_rc
 from code import Ui_Form as codeui
+from instructions import Ui_Form as instructionsui
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
@@ -123,12 +124,13 @@ class Ui_MainWindow(object):
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
-
+        MainWindow.setFixedSize(1021, 669)
         self.retranslateUi(MainWindow)
         QMetaObject.connectSlotsByName(MainWindow)
         self.btnImportar.clicked.connect(self.importar_archivo)
         self.btnExportar.clicked.connect(self.exportar_archivo)
         self.verCodigoJS.clicked.connect(self.abrir_codigo)
+        self.inicializar_diagrama()
     # setupUi
 
     def retranslateUi(self, MainWindow):
@@ -141,6 +143,72 @@ class Ui_MainWindow(object):
         self.btnAnadirFuncion.setText("")
         self.verCodigoJS.setText("")
     
+    def inicializar_diagrama(self):
+        # Rectángulo de inicio
+        self.recInicio = QFrame(self.frame_2)
+        self.recInicio.setObjectName(u"recInicio")
+        self.recInicio.setGeometry(QRect(400, 50, 200, 60))
+        self.recInicio.setStyleSheet(u"background-color: rgb(255, 227, 227);"
+                                    u"border-radius: 15px;"
+                                    u"border: 2px solid rgb(0, 0, 0);")
+        self.recInicio.setFrameShape(QFrame.StyledPanel)
+        self.recInicio.setFrameShadow(QFrame.Raised)
+        
+        self.lblInicio = QLabel(self.recInicio)
+        self.lblInicio.setObjectName(u"lblInicio")
+        self.lblInicio.setGeometry(QRect(0, 0, 200, 60))
+        font = QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        self.lblInicio.setFont(font)
+        self.lblInicio.setAlignment(Qt.AlignCenter)
+        self.lblInicio.setText("Inicio")
+        
+        # Flecha que conecta los rectángulos
+        self.lineaConexion = QFrame(self.frame_2)
+        self.lineaConexion.setObjectName(u"lineaConexion")
+        self.lineaConexion.setGeometry(QRect(500, 110, 2, 100))
+        self.lineaConexion.setStyleSheet(u"background-color: rgb(0, 0, 0);")
+        self.lineaConexion.setFrameShape(QFrame.VLine)
+        self.lineaConexion.setFrameShadow(QFrame.Plain)
+        
+        # Creación de la punta de flecha (triángulo)
+        self.puntaFlecha = QLabel(self.frame_2)
+        self.puntaFlecha.setObjectName(u"puntaFlecha")
+        self.puntaFlecha.setGeometry(QRect(490, 210, 20, 10))
+        self.puntaFlecha.setStyleSheet(u"background-color: rgba(0, 0, 0, 0);")
+        triangulo = QPixmap(20, 10)
+        triangulo.fill(Qt.transparent)
+        painter = QPainter(triangulo)
+        painter.setBrush(QBrush(QColor(0, 0, 0)))
+        points = [QPoint(10, 10), QPoint(0, 0), QPoint(20, 0)]
+        painter.drawPolygon(points)
+        painter.end()
+        self.puntaFlecha.setPixmap(triangulo)
+        
+        # Rectángulo de fin (redondeado)
+        self.recFin = QFrame(self.frame_2)
+        self.recFin.setObjectName(u"recFin")
+        self.recFin.setGeometry(QRect(400, 220, 200, 60))
+        self.recFin.setStyleSheet(u"background-color: rgb(255, 227, 227);"
+                                 u"border-radius: 15px;"
+                                 u"border: 2px solid rgb(0, 0, 0);")
+        self.recFin.setFrameShape(QFrame.StyledPanel)
+        self.recFin.setFrameShadow(QFrame.Raised)
+        
+        self.lblFin = QLabel(self.recFin)
+        self.lblFin.setObjectName(u"lblFin")
+        self.lblFin.setGeometry(QRect(0, 0, 200, 60))
+        self.lblFin.setFont(font)
+        self.lblFin.setAlignment(Qt.AlignCenter)
+        self.lblFin.setText("Fin")
+        self.btnFlecha = QPushButton(self.frame_2)
+        self.btnFlecha.setObjectName(u"btnFlecha")
+        self.btnFlecha.setGeometry(QRect(480, 110, 40, 110))  # Cubre toda la flecha
+        self.btnFlecha.setStyleSheet(u"background-color: rgba(0, 0, 0, 0);")  # Totalmente transparente
+        self.btnFlecha.setCursor(QCursor(Qt.PointingHandCursor))  # Cambiar cursor al pasar por encima
+        self.btnFlecha.clicked.connect(self.abrir_instructions)
+
     def importar_archivo(self):
         options = QFileDialog.Options()
         options |= QFileDialog.ReadOnly
@@ -161,6 +229,11 @@ class Ui_MainWindow(object):
         self.ui.setupUi(self.code)
         self.code.show()
 
+    def abrir_instructions(self):
+        self.instructions = QMainWindow()
+        self.ui = instructionsui()
+        self.ui.setupUi(self.instructions)
+        self.instructions.show()
     # retranslateUi
 #Main method
 if __name__ == "__main__":
