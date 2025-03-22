@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'homeLnuDxX.ui'
+## Form generated from reading UI file 'homeQAeLeJ.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.4.3
 ##
@@ -17,37 +17,37 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
     QMainWindow, QPushButton, QScrollBar, QSizePolicy,
-    QStatusBar, QWidget, QFileDialog)
+    QStatusBar, QTextEdit, QWidget,QFileDialog)
 import iconos_rc
 from code import Ui_Form as codeui
-from instructions import Ui_Form as instructionsui
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1019, 669)
+        MainWindow.resize(870, 663)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.frame = QFrame(self.centralwidget)
         self.frame.setObjectName(u"frame")
-        self.frame.setGeometry(QRect(0, 0, 1021, 81))
+        self.frame.setGeometry(QRect(0, 0, 871, 91))
         self.frame.setStyleSheet(u"background-color: rgb(201, 233, 210)")
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
         self.label = QLabel(self.frame)
         self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(10, 10, 61, 61))
+        self.label.setGeometry(QRect(20, 10, 61, 61))
         self.label.setStyleSheet(u"border-radius: 5px;")
         self.label.setPixmap(QPixmap(u":/icons/icons/logo-logicflow.png"))
         self.label.setScaledContents(True)
         self.horizontalLayoutWidget = QWidget(self.frame)
         self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
-        self.horizontalLayoutWidget.setGeometry(QRect(90, 10, 571, 71))
+        self.horizontalLayoutWidget.setGeometry(QRect(90, 10, 781, 90))
         self.horizontalLayout = QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.btnImportar = QPushButton(self.horizontalLayoutWidget)
         self.btnImportar.setObjectName(u"btnImportar")
+        self.btnImportar.setCursor(QCursor(Qt.OpenHandCursor))
         self.btnImportar.setStyleSheet(u"background-color: rgba(0,0,0,0);")
         icon = QIcon()
         icon.addFile(u":/icons/icons/carpeta-abierta.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -58,6 +58,7 @@ class Ui_MainWindow(object):
 
         self.btnExportar = QPushButton(self.horizontalLayoutWidget)
         self.btnExportar.setObjectName(u"btnExportar")
+        self.btnExportar.setCursor(QCursor(Qt.OpenHandCursor))
         self.btnExportar.setStyleSheet(u"background-color: rgba(0,0,0,0);")
         icon1 = QIcon()
         icon1.addFile(u":/icons/icons/documento.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -68,6 +69,7 @@ class Ui_MainWindow(object):
 
         self.btnCorrer = QPushButton(self.horizontalLayoutWidget)
         self.btnCorrer.setObjectName(u"btnCorrer")
+        self.btnCorrer.setCursor(QCursor(Qt.OpenHandCursor))
         self.btnCorrer.setStyleSheet(u"background-color: rgba(0,0,0,0);")
         icon2 = QIcon()
         icon2.addFile(u":/icons/icons/boton-de-play.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -78,6 +80,7 @@ class Ui_MainWindow(object):
 
         self.btnParar = QPushButton(self.horizontalLayoutWidget)
         self.btnParar.setObjectName(u"btnParar")
+        self.btnParar.setCursor(QCursor(Qt.OpenHandCursor))
         self.btnParar.setStyleSheet(u"background-color: rgba(0,0,0,0);")
         icon3 = QIcon()
         icon3.addFile(u":/icons/icons/detener.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -88,6 +91,7 @@ class Ui_MainWindow(object):
 
         self.btnAnadirFuncion = QPushButton(self.horizontalLayoutWidget)
         self.btnAnadirFuncion.setObjectName(u"btnAnadirFuncion")
+        self.btnAnadirFuncion.setCursor(QCursor(Qt.OpenHandCursor))
         self.btnAnadirFuncion.setStyleSheet(u"background-color: rgba(0,0,0,0);")
         icon4 = QIcon()
         icon4.addFile(u":/icons/icons/rompecabezas.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -98,6 +102,7 @@ class Ui_MainWindow(object):
 
         self.verCodigoJS = QPushButton(self.horizontalLayoutWidget)
         self.verCodigoJS.setObjectName(u"verCodigoJS")
+        self.verCodigoJS.setCursor(QCursor(Qt.OpenHandCursor))
         self.verCodigoJS.setStyleSheet(u"background-color: rgba(0,0,0,0);")
         icon5 = QIcon()
         icon5.addFile(u":/icons/icons/js.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -108,29 +113,100 @@ class Ui_MainWindow(object):
 
         self.frame_2 = QFrame(self.centralwidget)
         self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setGeometry(QRect(0, 80, 1021, 571))
+        self.frame_2.setGeometry(QRect(0, 90, 871, 561))
         self.frame_2.setStyleSheet(u"background-color: rgb(254, 249, 242)")
         self.frame_2.setFrameShape(QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Raised)
-        self.verticalScrollBar = QScrollBar(self.frame_2)
-        self.verticalScrollBar.setObjectName(u"verticalScrollBar")
-        self.verticalScrollBar.setGeometry(QRect(1000, 0, 20, 571))
-        self.verticalScrollBar.setOrientation(Qt.Vertical)
         self.horizontalScrollBar = QScrollBar(self.frame_2)
         self.horizontalScrollBar.setObjectName(u"horizontalScrollBar")
         self.horizontalScrollBar.setGeometry(QRect(10, 545, 991, 21))
         self.horizontalScrollBar.setOrientation(Qt.Horizontal)
+        self.textEdit = QTextEdit(self.frame_2)
+        self.textEdit.setObjectName(u"textEdit")
+        self.textEdit.setGeometry(QRect(0, 0, 661, 561))
+        self.textEdit.setStyleSheet(u"font: 15pt \"Fira Code\"; color: rgb(0,180,0);")
+        self.frame_3 = QFrame(self.frame_2)
+        self.frame_3.setObjectName(u"frame_3")
+        self.frame_3.setGeometry(QRect(660, 10, 211, 541))
+        self.frame_3.setStyleSheet(u"background-color: rgb(201, 233, 210);\n"
+"border-color: rgb(0, 0, 0);")
+        self.frame_3.setFrameShape(QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QFrame.Raised)
+        self.btnDeclarar = QPushButton(self.frame_3)
+        self.btnDeclarar.setObjectName(u"btnDeclarar")
+        self.btnDeclarar.setGeometry(QRect(10, 110, 191, 41))
+        self.btnDeclarar.setCursor(QCursor(Qt.OpenHandCursor))
+        self.btnDeclarar.setStyleSheet(u"background-color: rgb(251, 216, 124);\n"
+"font: 600 12pt \"Cascadia Code SemiBold\";\n"
+"border-radius: 10px;")
+        self.btnMostrar = QPushButton(self.frame_3)
+        self.btnMostrar.setObjectName(u"btnMostrar")
+        self.btnMostrar.setGeometry(QRect(10, 10, 191, 41))
+        self.btnMostrar.setCursor(QCursor(Qt.OpenHandCursor))
+        self.btnMostrar.setStyleSheet(u"background-color: rgb(251, 216, 124);\n"
+"font: 600 12pt \"Cascadia Code SemiBold\";\n"
+"border-radius: 10px;")
+        self.btnLeer = QPushButton(self.frame_3)
+        self.btnLeer.setObjectName(u"btnLeer")
+        self.btnLeer.setGeometry(QRect(10, 60, 191, 41))
+        self.btnLeer.setCursor(QCursor(Qt.OpenHandCursor))
+        self.btnLeer.setStyleSheet(u"background-color: rgb(251, 216, 124);\n"
+"font: 600 12pt \"Cascadia Code SemiBold\";\n"
+"border-radius: 10px;")
+        self.btnAsignar = QPushButton(self.frame_3)
+        self.btnAsignar.setObjectName(u"btnAsignar")
+        self.btnAsignar.setGeometry(QRect(10, 160, 191, 41))
+        self.btnAsignar.setCursor(QCursor(Qt.OpenHandCursor))
+        self.btnAsignar.setStyleSheet(u"background-color: rgb(251, 216, 124);\n"
+"font: 600 12pt \"Cascadia Code SemiBold\";\n"
+"border-radius: 10px;")
+        self.btnCondicion = QPushButton(self.frame_3)
+        self.btnCondicion.setObjectName(u"btnCondicion")
+        self.btnCondicion.setGeometry(QRect(10, 210, 191, 41))
+        self.btnCondicion.setCursor(QCursor(Qt.OpenHandCursor))
+        self.btnCondicion.setStyleSheet(u"background-color: rgb(251, 216, 124);\n"
+"font: 600 12pt \"Cascadia Code SemiBold\";\n"
+"border-radius: 10px;")
+        self.btnRepetir = QPushButton(self.frame_3)
+        self.btnRepetir.setObjectName(u"btnRepetir")
+        self.btnRepetir.setGeometry(QRect(10, 260, 191, 41))
+        self.btnRepetir.setCursor(QCursor(Qt.OpenHandCursor))
+        self.btnRepetir.setStyleSheet(u"background-color: rgb(251, 216, 124);\n"
+"font: 600 12pt \"Cascadia Code SemiBold\";\n"
+"border-radius: 10px;")
+        self.btnHacer = QPushButton(self.frame_3)
+        self.btnHacer.setObjectName(u"btnHacer")
+        self.btnHacer.setGeometry(QRect(10, 310, 191, 41))
+        self.btnHacer.setCursor(QCursor(Qt.OpenHandCursor))
+        self.btnHacer.setStyleSheet(u"background-color: rgb(251, 216, 124);\n"
+"font: 600 12pt \"Cascadia Code SemiBold\";\n"
+"border-radius: 10px;")
+        self.btnDefinir = QPushButton(self.frame_3)
+        self.btnDefinir.setObjectName(u"btnDefinir")
+        self.btnDefinir.setGeometry(QRect(10, 360, 191, 41))
+        self.btnDefinir.setCursor(QCursor(Qt.OpenHandCursor))
+        self.btnDefinir.setStyleSheet(u"background-color: rgb(251, 216, 124);\n"
+"font: 600 12pt \"Cascadia Code SemiBold\";\n"
+"border-radius: 10px;")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
-        MainWindow.setFixedSize(1021, 669)
+
         self.retranslateUi(MainWindow)
-        QMetaObject.connectSlotsByName(MainWindow)
+        self.inicializar_codigo()
+        self.btnMostrar.clicked.connect(self.mostrar)
+        self.btnLeer.clicked.connect(self.leer)
+        self.btnDeclarar.clicked.connect(self.declarar)
+        self.btnAsignar.clicked.connect(self.asignar)
+        self.btnCondicion.clicked.connect(self.establecer_condicion)
+        self.btnRepetir.clicked.connect(self.repetir_si)
+        self.btnHacer.clicked.connect(self.hacer_hasta)
+        self.btnDefinir.clicked.connect(self.definir_funcion)
         self.btnImportar.clicked.connect(self.importar_archivo)
         self.btnExportar.clicked.connect(self.exportar_archivo)
         self.verCodigoJS.clicked.connect(self.abrir_codigo)
-        self.inicializar_diagrama()
+        QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
     def retranslateUi(self, MainWindow):
@@ -142,86 +218,38 @@ class Ui_MainWindow(object):
         self.btnParar.setText("")
         self.btnAnadirFuncion.setText("")
         self.verCodigoJS.setText("")
+        self.btnDeclarar.setText(QCoreApplication.translate("MainWindow", u"Declarar Variable", None))
+        self.btnMostrar.setText(QCoreApplication.translate("MainWindow", u"Mostrar", None))
+        self.btnLeer.setText(QCoreApplication.translate("MainWindow", u"Leer", None))
+        self.btnAsignar.setText(QCoreApplication.translate("MainWindow", u"Asignar Valor", None))
+        self.btnCondicion.setText(QCoreApplication.translate("MainWindow", u"Establecer Condici\u00f3n", None))
+        self.btnRepetir.setText(QCoreApplication.translate("MainWindow", u"Repetir Si", None))
+        self.btnHacer.setText(QCoreApplication.translate("MainWindow", u"Hacer Hasta", None))
+        self.btnDefinir.setText(QCoreApplication.translate("MainWindow", u"Definir Funci\u00f3n", None))
+    # retranslateUi
+    def inicializar_codigo(self):
+        self.textEdit.setText("Inicio (NombreAlgoritmo)\n\nFin")
+        self.textEdit.setTextColor(QColor(0, 255, 0))
     
-    def inicializar_diagrama(self):
-        # Rectángulo de inicio
-        self.recInicio = QFrame(self.frame_2)
-        self.recInicio.setObjectName(u"recInicio")
-        self.recInicio.setGeometry(QRect(400, 50, 200, 60))
-        self.recInicio.setStyleSheet(u"background-color: rgb(255, 227, 227);"
-                                    u"border-radius: 15px;"
-                                    u"border: 2px solid rgb(0, 0, 0);")
-        self.recInicio.setFrameShape(QFrame.StyledPanel)
-        self.recInicio.setFrameShadow(QFrame.Raised)
-        
-        self.lblInicio = QLabel(self.recInicio)
-        self.lblInicio.setObjectName(u"lblInicio")
-        self.lblInicio.setGeometry(QRect(0, 0, 200, 60))
-        font = QFont()
-        font.setPointSize(12)
-        font.setBold(True)
-        self.lblInicio.setFont(font)
-        self.lblInicio.setAlignment(Qt.AlignCenter)
-        self.lblInicio.setText("Inicio")
-        
-        # Flecha que conecta los rectángulos
-        self.lineaConexion = QFrame(self.frame_2)
-        self.lineaConexion.setObjectName(u"lineaConexion")
-        self.lineaConexion.setGeometry(QRect(500, 110, 2, 100))
-        self.lineaConexion.setStyleSheet(u"background-color: rgb(0, 0, 0);")
-        self.lineaConexion.setFrameShape(QFrame.VLine)
-        self.lineaConexion.setFrameShadow(QFrame.Plain)
-        
-        # Creación de la punta de flecha (triángulo)
-        self.puntaFlecha = QLabel(self.frame_2)
-        self.puntaFlecha.setObjectName(u"puntaFlecha")
-        self.puntaFlecha.setGeometry(QRect(490, 210, 20, 10))
-        self.puntaFlecha.setStyleSheet(u"background-color: rgba(0, 0, 0, 0);")
-        triangulo = QPixmap(20, 10)
-        triangulo.fill(Qt.transparent)
-        painter = QPainter(triangulo)
-        painter.setBrush(QBrush(QColor(0, 0, 0)))
-        points = [QPoint(10, 10), QPoint(0, 0), QPoint(20, 0)]
-        painter.drawPolygon(points)
-        painter.end()
-        self.puntaFlecha.setPixmap(triangulo)
-        
-        # Rectángulo de fin (redondeado)
-        self.recFin = QFrame(self.frame_2)
-        self.recFin.setObjectName(u"recFin")
-        self.recFin.setGeometry(QRect(400, 220, 200, 60))
-        self.recFin.setStyleSheet(u"background-color: rgb(255, 227, 227);"
-                                 u"border-radius: 15px;"
-                                 u"border: 2px solid rgb(0, 0, 0);")
-        self.recFin.setFrameShape(QFrame.StyledPanel)
-        self.recFin.setFrameShadow(QFrame.Raised)
-        
-        self.lblFin = QLabel(self.recFin)
-        self.lblFin.setObjectName(u"lblFin")
-        self.lblFin.setGeometry(QRect(0, 0, 200, 60))
-        self.lblFin.setFont(font)
-        self.lblFin.setAlignment(Qt.AlignCenter)
-        self.lblFin.setText("Fin")
-        self.btnFlecha = QPushButton(self.frame_2)
-        self.btnFlecha.setObjectName(u"btnFlecha")
-        self.btnFlecha.setGeometry(QRect(480, 110, 40, 110))  # Cubre toda la flecha
-        self.btnFlecha.setStyleSheet(u"background-color: rgba(0, 0, 0, 0);")  # Totalmente transparente
-        self.btnFlecha.setCursor(QCursor(Qt.PointingHandCursor))  # Cambiar cursor al pasar por encima
-        self.btnFlecha.clicked.connect(self.abrir_instructions)
-
     def importar_archivo(self):
         options = QFileDialog.Options()
         options |= QFileDialog.ReadOnly
-        fileName, _ = QFileDialog.getOpenFileName(None, "Importar Archivo", "", "Todos los archivos (*);;Archivos de texto (*.txt)", options=options)
+        fileName, _ = QFileDialog.getOpenFileName(None, "Importar Archivo", "", "Archivos LogicFlow (*.sam)", options=options)
         if fileName:
             print(f"Archivo seleccionado: {fileName}")
+            with open(fileName, "r") as file:
+                codigo = file.read()
+                self.textEdit.setText(codigo)
     
     def exportar_archivo(self):
         options = QFileDialog.Options()
         options |= QFileDialog.ReadOnly
-        fileName, _ = QFileDialog.getSaveFileName(None, "Exportar Archivo", "", "Todos los archivos (*);;Archivos de texto (*.txt)", options=options)
+        fileName, _ = QFileDialog.getSaveFileName(None, "Exportar Archivo", "", "Archivos LogicFlow (*.sam)", options=options)
         if fileName:
             print(f"Archivo seleccionado: {fileName}")
+            codigo = self.exportar_codigo()
+            with open(fileName, "w") as file:
+                file.write(codigo)
     
     def abrir_codigo(self):
         self.code = QMainWindow()
@@ -229,13 +257,34 @@ class Ui_MainWindow(object):
         self.ui.setupUi(self.code)
         self.code.show()
 
-    def abrir_instructions(self):
-        self.instructions = QMainWindow()
-        self.ui = instructionsui()
-        self.ui.setupUi(self.instructions)
-        self.instructions.show()
-    # retranslateUi
-#Main method
+    def exportar_codigo(self):
+        codigo = self.textEdit.toPlainText()
+        return codigo
+
+    def mostrar(self):
+        self.textEdit.insertPlainText('\t   mostrar("Texto" o Variable)\n')
+    
+    def leer(self):
+        self.textEdit.insertPlainText('\t   leer(Variable)\n')
+    
+    def declarar(self):
+        self.textEdit.insertPlainText('\t   declarar nombre_variable tipo: \n')
+    
+    def asignar(self):
+        self.textEdit.insertPlainText('\t   nombre_variable = valor\n')
+    
+    def establecer_condicion(self):
+        self.textEdit.insertPlainText('\t   si (condicion) ejecutar: \n \t\t ... \n')
+    
+    def repetir_si(self):
+        self.textEdit.insertPlainText('\t   repetir si (condicion) ejecutar: \n \t\t ... \n')
+
+    def hacer_hasta(self):
+        self.textEdit.insertPlainText('\t   hacer hasta (condicion): \n \t\t ... \n')
+    
+    def definir_funcion(self):
+        self.textEdit.insertPlainText('\t   definir nombre_funcion(parametros): \n \t\t ... \n')
+
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)
@@ -243,4 +292,4 @@ if __name__ == "__main__":
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
-    sys.exit(app.exec())
+    sys.exit(app.exec_())
