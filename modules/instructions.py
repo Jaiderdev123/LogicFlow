@@ -50,7 +50,6 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-
 class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():

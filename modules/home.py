@@ -197,6 +197,7 @@ class Ui_MainWindow(object):
         self.btnExportar.clicked.connect(self.exportar_archivo)
         self.verCodigoJS.clicked.connect(self.abrir_codigo)
         self.btnCorrer.clicked.connect(self.abrir_exec)
+        self.btnCorrer.clicked.connect(self.enviar_codigo)
     # setupUi
 
     def retranslateUi(self, MainWindow):
@@ -329,7 +330,12 @@ class Ui_MainWindow(object):
             if ok2:
                 params = parametros if parametros else ""
                 self.textEdit.insertPlainText(f'\t   definir {nombre}({params}): \n\t\t...\n')
-        
+    def enviar_codigo(self):
+        codigo = self.textEdit.toPlainText()
+        ejecucion = execui()
+        ejecucion.set_code(codigo)
+
+
     def abrir_exec(self):
         self.exec = QMainWindow()
         self.ui = execui()

@@ -19,9 +19,10 @@ from PySide6.QtWidgets import (QApplication, QFrame, QLineEdit, QMainWindow,
     QPushButton, QScrollBar, QSizePolicy, QStatusBar,
     QVBoxLayout, QWidget)
 import iconos_rc
-
+from core import Interprete as core
 class Ui_Ejecucion(object):
     def setupUi(self, Ejecucion):
+        Ui_Ejecucion.codigo = ""
         if not Ejecucion.objectName():
             Ejecucion.setObjectName(u"Ejecucion")
         Ejecucion.resize(657, 519)
@@ -118,19 +119,20 @@ class Ui_Ejecucion(object):
         icon5.addFile(u":/icons/icons/js.png", QSize(), QIcon.Normal, QIcon.Off)
         self.verCodigoJS.setIcon(icon5)
         self.verCodigoJS.setIconSize(QSize(50, 50))
-
         self.verticalLayout.addWidget(self.verCodigoJS)
-
         Ejecucion.setCentralWidget(self.centralwidget)
         self.statusbar = QStatusBar(Ejecucion)
         self.statusbar.setObjectName(u"statusbar")
         Ejecucion.setStatusBar(self.statusbar)
-
         self.retranslateUi(Ejecucion)
-
         QMetaObject.connectSlotsByName(Ejecucion)
+
     # setupUi
 
+    def set_code(self, code):
+        Ui_Ejecucion.codigo = code
+        print(code)
+        
     def retranslateUi(self, Ejecucion):
         Ejecucion.setWindowTitle(QCoreApplication.translate("Ejecucion", u"MainWindow", None))
         self.pushButton.setText("")
