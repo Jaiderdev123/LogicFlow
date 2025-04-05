@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Ejecucion</class>
+ <widget class="QMainWindow" name="Ejecucion">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>657</width>
+    <height>519</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>701</width>
+      <height>601</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLineEdit" name="entrada">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>450</y>
+       <width>471</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 15pt &quot;Fira Code&quot;;
+background-color: rgb(255, 255, 255);</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>570</x>
+       <y>460</y>
+       <width>81</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../src/iconos.qrc">
+       <normaloff>:/icons/icons/subir.png</normaloff>:/icons/icons/subir.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>30</width>
+       <height>30</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QFrame" name="frame_2">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>0</y>
+       <width>581</width>
+       <height>461</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-image: url(:/fondos/fondos/fondo.jpg);
+background-whidt: 300px;</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QScrollBar" name="verticalScrollBar">
+      <property name="geometry">
+       <rect>
+        <x>550</x>
+        <y>0</y>
+        <width>16</width>
+        <height>451</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="frame_3">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>91</width>
+       <height>501</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(201, 233, 210);</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QWidget" name="verticalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>91</width>
+        <height>501</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QPushButton" name="btnCorrer">
+         <property name="cursor">
+          <cursorShape>OpenHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgba(0,0,0,0);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../src/iconos.qrc">
+           <normaloff>:/icons/icons/boton-de-play.png</normaloff>:/icons/icons/boton-de-play.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>50</width>
+           <height>50</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnParar">
+         <property name="cursor">
+          <cursorShape>OpenHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgba(0,0,0,0);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../src/iconos.qrc">
+           <normaloff>:/icons/icons/detener.png</normaloff>:/icons/icons/detener.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>50</width>
+           <height>50</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnAumentar">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgba(0,0,0,0);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../src/iconos.qrc">
+           <normaloff>:/icons/icons/acercarse.png</normaloff>:/icons/icons/acercarse.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>50</width>
+           <height>50</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnReducir">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgba(0,0,0,0);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../src/iconos.qrc">
+           <normaloff>:/icons/icons/alejar.png</normaloff>:/icons/icons/alejar.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>50</width>
+           <height>50</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="verCodigoJS">
+         <property name="cursor">
+          <cursorShape>OpenHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgba(0,0,0,0);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../src/iconos.qrc">
+           <normaloff>:/icons/icons/js.png</normaloff>:/icons/icons/js.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>50</width>
+           <height>50</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources>
+  <include location="../src/iconos.qrc"/>
+ </resources>
+ <connections/>
+</ui>

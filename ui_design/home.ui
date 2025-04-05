@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>870</width>
+    <width>871</width>
     <height>663</height>
    </rect>
   </property>
@@ -134,52 +134,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnParar">
-        <property name="cursor">
-         <cursorShape>OpenHandCursor</cursorShape>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgba(0,0,0,0);</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../src/iconos.qrc">
-          <normaloff>:/icons/icons/detener.png</normaloff>:/icons/icons/detener.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>50</width>
-          <height>50</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnAnadirFuncion">
-        <property name="cursor">
-         <cursorShape>OpenHandCursor</cursorShape>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgba(0,0,0,0);</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../src/iconos.qrc">
-          <normaloff>:/icons/icons/rompecabezas.png</normaloff>:/icons/icons/rompecabezas.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>50</width>
-          <height>50</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="verCodigoJS">
         <property name="cursor">
          <cursorShape>OpenHandCursor</cursorShape>
@@ -193,6 +147,29 @@
         <property name="icon">
          <iconset resource="../src/iconos.qrc">
           <normaloff>:/icons/icons/js.png</normaloff>:/icons/icons/js.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnAyuda">
+        <property name="cursor">
+         <cursorShape>OpenHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgba(0,0,0,0);</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../src/iconos.qrc">
+          <normaloff>:/icons/icons/ayuda.png</normaloff>:/icons/icons/ayuda.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -253,9 +230,9 @@
      <property name="geometry">
       <rect>
        <x>660</x>
-       <y>10</y>
+       <y>0</y>
        <width>211</width>
-       <height>541</height>
+       <height>551</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -268,7 +245,7 @@ border-color: rgb(0, 0, 0);</string>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="btnDeclarar">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -289,7 +266,7 @@ border-radius: 10px;</string>
        <string>Declarar Variable</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="btnMostrar">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -310,7 +287,7 @@ border-radius: 10px;</string>
        <string>Mostrar</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="btnLeer">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -331,7 +308,7 @@ border-radius: 10px;</string>
        <string>Leer</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_4">
+     <widget class="QPushButton" name="btnAsignar">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -352,7 +329,7 @@ border-radius: 10px;</string>
        <string>Asignar Valor</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_5">
+     <widget class="QPushButton" name="btnCondicion">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -373,7 +350,7 @@ border-radius: 10px;</string>
        <string>Establecer Condición</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_6">
+     <widget class="QPushButton" name="btnRepetirSi">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -394,7 +371,7 @@ border-radius: 10px;</string>
        <string>Repetir Si</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_7">
+     <widget class="QPushButton" name="btnHacerHasta">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -415,7 +392,7 @@ border-radius: 10px;</string>
        <string>Hacer Hasta</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_8">
+     <widget class="QPushButton" name="btnDefinirFuncion">
       <property name="geometry">
        <rect>
         <x>10</x>

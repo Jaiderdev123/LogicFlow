@@ -17,14 +17,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
     QMainWindow, QPushButton, QScrollBar, QSizePolicy,
-    QStatusBar, QTextEdit, QWidget,QFileDialog)
-import iconos_rc
+    QStatusBar, QTextEdit, QWidget,QFileDialog, QInputDialog)
+from iconos_rc import *
 from code import Ui_Form as codeui
+from exec import Ui_Ejecucion as execui
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(870, 663)
+        MainWindow.resize(871, 663)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.frame = QFrame(self.centralwidget)
@@ -78,38 +79,27 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.btnCorrer)
 
-        self.btnParar = QPushButton(self.horizontalLayoutWidget)
-        self.btnParar.setObjectName(u"btnParar")
-        self.btnParar.setCursor(QCursor(Qt.OpenHandCursor))
-        self.btnParar.setStyleSheet(u"background-color: rgba(0,0,0,0);")
-        icon3 = QIcon()
-        icon3.addFile(u":/icons/icons/detener.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnParar.setIcon(icon3)
-        self.btnParar.setIconSize(QSize(50, 50))
-
-        self.horizontalLayout.addWidget(self.btnParar)
-
-        self.btnAnadirFuncion = QPushButton(self.horizontalLayoutWidget)
-        self.btnAnadirFuncion.setObjectName(u"btnAnadirFuncion")
-        self.btnAnadirFuncion.setCursor(QCursor(Qt.OpenHandCursor))
-        self.btnAnadirFuncion.setStyleSheet(u"background-color: rgba(0,0,0,0);")
-        icon4 = QIcon()
-        icon4.addFile(u":/icons/icons/rompecabezas.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnAnadirFuncion.setIcon(icon4)
-        self.btnAnadirFuncion.setIconSize(QSize(50, 50))
-
-        self.horizontalLayout.addWidget(self.btnAnadirFuncion)
-
         self.verCodigoJS = QPushButton(self.horizontalLayoutWidget)
         self.verCodigoJS.setObjectName(u"verCodigoJS")
         self.verCodigoJS.setCursor(QCursor(Qt.OpenHandCursor))
         self.verCodigoJS.setStyleSheet(u"background-color: rgba(0,0,0,0);")
-        icon5 = QIcon()
-        icon5.addFile(u":/icons/icons/js.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.verCodigoJS.setIcon(icon5)
+        icon3 = QIcon()
+        icon3.addFile(u":/icons/icons/js.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.verCodigoJS.setIcon(icon3)
         self.verCodigoJS.setIconSize(QSize(50, 50))
 
         self.horizontalLayout.addWidget(self.verCodigoJS)
+
+        self.btnAyuda = QPushButton(self.horizontalLayoutWidget)
+        self.btnAyuda.setObjectName(u"btnAyuda")
+        self.btnAyuda.setCursor(QCursor(Qt.OpenHandCursor))
+        self.btnAyuda.setStyleSheet(u"background-color: rgba(0,0,0,0);")
+        icon4 = QIcon()
+        icon4.addFile(u":/icons/icons/ayuda.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btnAyuda.setIcon(icon4)
+        self.btnAyuda.setIconSize(QSize(50, 50))
+
+        self.horizontalLayout.addWidget(self.btnAyuda)
 
         self.frame_2 = QFrame(self.centralwidget)
         self.frame_2.setObjectName(u"frame_2")
@@ -124,10 +114,10 @@ class Ui_MainWindow(object):
         self.textEdit = QTextEdit(self.frame_2)
         self.textEdit.setObjectName(u"textEdit")
         self.textEdit.setGeometry(QRect(0, 0, 661, 561))
-        self.textEdit.setStyleSheet(u"font: 15pt \"Fira Code\"; color: rgb(0,180,0);")
+        self.textEdit.setStyleSheet(u"font: 15pt \"Fira Code\";")
         self.frame_3 = QFrame(self.frame_2)
         self.frame_3.setObjectName(u"frame_3")
-        self.frame_3.setGeometry(QRect(660, 10, 211, 541))
+        self.frame_3.setGeometry(QRect(660, 0, 211, 551))
         self.frame_3.setStyleSheet(u"background-color: rgb(201, 233, 210);\n"
 "border-color: rgb(0, 0, 0);")
         self.frame_3.setFrameShape(QFrame.StyledPanel)
@@ -167,46 +157,46 @@ class Ui_MainWindow(object):
         self.btnCondicion.setStyleSheet(u"background-color: rgb(251, 216, 124);\n"
 "font: 600 12pt \"Cascadia Code SemiBold\";\n"
 "border-radius: 10px;")
-        self.btnRepetir = QPushButton(self.frame_3)
-        self.btnRepetir.setObjectName(u"btnRepetir")
-        self.btnRepetir.setGeometry(QRect(10, 260, 191, 41))
-        self.btnRepetir.setCursor(QCursor(Qt.OpenHandCursor))
-        self.btnRepetir.setStyleSheet(u"background-color: rgb(251, 216, 124);\n"
+        self.btnRepetirSi = QPushButton(self.frame_3)
+        self.btnRepetirSi.setObjectName(u"btnRepetirSi")
+        self.btnRepetirSi.setGeometry(QRect(10, 260, 191, 41))
+        self.btnRepetirSi.setCursor(QCursor(Qt.OpenHandCursor))
+        self.btnRepetirSi.setStyleSheet(u"background-color: rgb(251, 216, 124);\n"
 "font: 600 12pt \"Cascadia Code SemiBold\";\n"
 "border-radius: 10px;")
-        self.btnHacer = QPushButton(self.frame_3)
-        self.btnHacer.setObjectName(u"btnHacer")
-        self.btnHacer.setGeometry(QRect(10, 310, 191, 41))
-        self.btnHacer.setCursor(QCursor(Qt.OpenHandCursor))
-        self.btnHacer.setStyleSheet(u"background-color: rgb(251, 216, 124);\n"
+        self.btnHacerHasta = QPushButton(self.frame_3)
+        self.btnHacerHasta.setObjectName(u"btnHacerHasta")
+        self.btnHacerHasta.setGeometry(QRect(10, 310, 191, 41))
+        self.btnHacerHasta.setCursor(QCursor(Qt.OpenHandCursor))
+        self.btnHacerHasta.setStyleSheet(u"background-color: rgb(251, 216, 124);\n"
 "font: 600 12pt \"Cascadia Code SemiBold\";\n"
 "border-radius: 10px;")
-        self.btnDefinir = QPushButton(self.frame_3)
-        self.btnDefinir.setObjectName(u"btnDefinir")
-        self.btnDefinir.setGeometry(QRect(10, 360, 191, 41))
-        self.btnDefinir.setCursor(QCursor(Qt.OpenHandCursor))
-        self.btnDefinir.setStyleSheet(u"background-color: rgb(251, 216, 124);\n"
+        self.btnDefinirFuncion = QPushButton(self.frame_3)
+        self.btnDefinirFuncion.setObjectName(u"btnDefinirFuncion")
+        self.btnDefinirFuncion.setGeometry(QRect(10, 360, 191, 41))
+        self.btnDefinirFuncion.setCursor(QCursor(Qt.OpenHandCursor))
+        self.btnDefinirFuncion.setStyleSheet(u"background-color: rgb(251, 216, 124);\n"
 "font: 600 12pt \"Cascadia Code SemiBold\";\n"
 "border-radius: 10px;")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
-
         self.retranslateUi(MainWindow)
+        QMetaObject.connectSlotsByName(MainWindow)
         self.inicializar_codigo()
         self.btnMostrar.clicked.connect(self.mostrar)
         self.btnLeer.clicked.connect(self.leer)
         self.btnDeclarar.clicked.connect(self.declarar)
         self.btnAsignar.clicked.connect(self.asignar)
         self.btnCondicion.clicked.connect(self.establecer_condicion)
-        self.btnRepetir.clicked.connect(self.repetir_si)
-        self.btnHacer.clicked.connect(self.hacer_hasta)
-        self.btnDefinir.clicked.connect(self.definir_funcion)
+        self.btnRepetirSi.clicked.connect(self.repetir_si)
+        self.btnHacerHasta.clicked.connect(self.hacer_hasta)
+        self.btnDefinirFuncion.clicked.connect(self.definir_funcion)
         self.btnImportar.clicked.connect(self.importar_archivo)
         self.btnExportar.clicked.connect(self.exportar_archivo)
         self.verCodigoJS.clicked.connect(self.abrir_codigo)
-        QMetaObject.connectSlotsByName(MainWindow)
+        self.btnCorrer.clicked.connect(self.abrir_exec)
     # setupUi
 
     def retranslateUi(self, MainWindow):
@@ -215,17 +205,16 @@ class Ui_MainWindow(object):
         self.btnImportar.setText("")
         self.btnExportar.setText("")
         self.btnCorrer.setText("")
-        self.btnParar.setText("")
-        self.btnAnadirFuncion.setText("")
         self.verCodigoJS.setText("")
+        self.btnAyuda.setText("")
         self.btnDeclarar.setText(QCoreApplication.translate("MainWindow", u"Declarar Variable", None))
         self.btnMostrar.setText(QCoreApplication.translate("MainWindow", u"Mostrar", None))
         self.btnLeer.setText(QCoreApplication.translate("MainWindow", u"Leer", None))
         self.btnAsignar.setText(QCoreApplication.translate("MainWindow", u"Asignar Valor", None))
         self.btnCondicion.setText(QCoreApplication.translate("MainWindow", u"Establecer Condici\u00f3n", None))
-        self.btnRepetir.setText(QCoreApplication.translate("MainWindow", u"Repetir Si", None))
-        self.btnHacer.setText(QCoreApplication.translate("MainWindow", u"Hacer Hasta", None))
-        self.btnDefinir.setText(QCoreApplication.translate("MainWindow", u"Definir Funci\u00f3n", None))
+        self.btnRepetirSi.setText(QCoreApplication.translate("MainWindow", u"Repetir Si", None))
+        self.btnHacerHasta.setText(QCoreApplication.translate("MainWindow", u"Hacer Hasta", None))
+        self.btnDefinirFuncion.setText(QCoreApplication.translate("MainWindow", u"Definir Funci\u00f3n", None))
     # retranslateUi
     def inicializar_codigo(self):
         self.textEdit.setText("Inicio (NombreAlgoritmo)\n\nFin")
@@ -284,6 +273,68 @@ class Ui_MainWindow(object):
     
     def definir_funcion(self):
         self.textEdit.insertPlainText('\t   definir nombre_funcion(parametros): \n \t\t ... \n')
+
+    def mostrar(self):
+        opciones = ["Texto", "Variable"]
+        tipo, ok1 = QInputDialog.getItem(None, "Tipo de Salida", "Seleccione el tipo:", opciones, 0, False)
+        if ok1 and tipo:
+            if tipo == "Texto":
+                texto, ok2 = QInputDialog.getText(None, "Mostrar", "Ingrese el texto a mostrar:")
+                if ok2 and texto:
+                    self.textEdit.insertPlainText(f'\t   mostrar("{texto}")\n')
+            elif tipo == "Variable":
+                variable, ok2 = QInputDialog.getText(None, "Mostrar", "Ingrese el nombre de la variable a mostrar:")
+                if ok2 and variable:
+                    self.textEdit.insertPlainText(f'\t   mostrar({variable})\n')
+   
+    def leer(self):
+        variable, ok = QInputDialog.getText(None, "Leer", "Ingrese el nombre de la variable:")
+        if ok and variable:
+            self.textEdit.insertPlainText(f'\t   leer({variable})\n')
+   
+    def declarar(self):
+        nombre, ok1 = QInputDialog.getText(None, "Declarar Variable", "Nombre de la variable:")
+        if ok1 and nombre:
+            tipos = ["entero", "decimal", "cadena", "booleano"]
+            tipo, ok2 = QInputDialog.getItem(None, "Tipo de Variable", "Seleccione el tipo:", tipos, 0, False)
+            if ok2 and tipo:
+                self.textEdit.insertPlainText(f'\t   declarar {nombre} tipo: {tipo}\n')
+   
+    def asignar(self):
+        variable, ok1 = QInputDialog.getText(None, "Asignar Valor", "Nombre de la variable:")
+        if ok1 and variable:
+            valor, ok2 = QInputDialog.getText(None, "Asignar Valor", f"Valor para {variable}:")
+            if ok2 and valor:
+                self.textEdit.insertPlainText(f'\t   {variable} = {valor}\n')
+   
+    def establecer_condicion(self):
+        condicion, ok = QInputDialog.getText(None, "Condición", "Ingrese la condición (ej: x > 5):")
+        if ok and condicion:
+            self.textEdit.insertPlainText(f'\t   si ({condicion}) ejecutar: \n\t\t...\n')
+   
+    def repetir_si(self):
+        condicion, ok = QInputDialog.getText(None, "Repetir Si", "Ingrese la condición (ej: x < 10):")
+        if ok and condicion:
+            self.textEdit.insertPlainText(f'\t   repetir si ({condicion}) ejecutar: \n\t\t...\n')
+   
+    def hacer_hasta(self):
+        condicion, ok = QInputDialog.getText(None, "Hacer Hasta", "Ingrese la condición (ej: x == 0):")
+        if ok and condicion:
+            self.textEdit.insertPlainText(f'\t   hacer hasta ({condicion}): \n\t\t...\n')
+   
+    def definir_funcion(self):
+        nombre, ok1 = QInputDialog.getText(None, "Definir Función", "Nombre de la función:")
+        if ok1 and nombre:
+            parametros, ok2 = QInputDialog.getText(None, "Parámetros", "Ingrese los parámetros (separados por comas):")
+            if ok2:
+                params = parametros if parametros else ""
+                self.textEdit.insertPlainText(f'\t   definir {nombre}({params}): \n\t\t...\n')
+        
+    def abrir_exec(self):
+        self.exec = QMainWindow()
+        self.ui = execui()
+        self.ui.setupUi(self.exec)
+        self.exec.show()
 
 if __name__ == "__main__":
     import sys

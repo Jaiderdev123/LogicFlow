@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="icons">
+    <file>icons/ayuda.png</file>
+    <file>icons/subir.png</file>
     <file>icons/alejar.png</file>
     <file>icons/acercarse.png</file>
     <file>icons/js.png</file>
@@ -9,5 +11,8 @@
     <file>icons/detener.png</file>
     <file>icons/documento.png</file>
     <file>icons/rompecabezas.png</file>
+  </qresource>
+  <qresource prefix="fondos">
+    <file>fondos/fondo.jpg</file>
   </qresource>
 </RCC>
