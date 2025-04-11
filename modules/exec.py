@@ -127,11 +127,6 @@ class Ui_Ejecucion(object):
         QMetaObject.connectSlotsByName(Ejecucion)
 
     # setupUi
-
-    def set_code(self, code):
-        Ui_Ejecucion.codigo = code
-        print(code)
-        self.entrada.setText(code)
         
     def retranslateUi(self, Ejecucion):
         Ejecucion.setWindowTitle(QCoreApplication.translate("Ejecucion", u"MainWindow", None))

@@ -334,6 +334,11 @@ class TraductorSAM:
         if not lineas[0].startswith("Inicio") or lineas[-1] != "Fin":
             return "Error: El código debe comenzar con 'Inicio' y terminar con 'Fin'"
         
+        # Extraer nombre del programa y agregar comentario
+        nombre_programa = lineas[0][lineas[0].find("(")+1:lineas[0].find(")")]
+        js_code.append(f"// Programa: {nombre_programa}")
+        js_code.append("")
+        
         # Saltar la línea de Inicio
         i += 1
         
@@ -362,24 +367,26 @@ class TraductorSAM:
                     for parte in partes:
                         parte = parte.strip()
                         if parte.startswith('"') and parte.endswith('"'):
+                            # Es una cadena de texto
                             parte = parte.replace("\\line", "\\n")
                         partes_js.append(parte)
                     
                     js_code.append("  " * indentacion + f"console.log({' + '.join(partes_js)});")
                 else:
                     # Solo un valor
-                    contenido = contenido.replace("\\line", "\\n")
+                    if contenido.startswith('"') and contenido.endswith('"'):
+                        contenido = contenido.replace("\\line", "\\n")
                     js_code.append("  " * indentacion + f"console.log({contenido});")
             
             # Leer entrada
             elif linea.startswith("leer("):
                 var_nombre = linea[linea.find("(")+1:linea.rfind(")")]
-                js_code.append("  " * indentacion + f"{var_nombre} = prompt('Ingrese {var_nombre}');")
+                js_code.append("  " * indentacion + f"let {var_nombre} = prompt('Ingrese {var_nombre}');")
                 js_code.append("  " * indentacion + f"{var_nombre} = Number({var_nombre});")
             
             # Asignación
             elif "=" in linea and not linea.startswith("si ") and not linea.startswith("hacer "):
-                partes = linea.split("=")
+                partes = linea.split("=", 1)  # Split solo la primera ocurrencia
                 nombre_var = partes[0].strip()
                 valor = partes[1].strip()
                 js_code.append("  " * indentacion + f"{nombre_var} = {valor};")
@@ -392,6 +399,7 @@ class TraductorSAM:
                 i += 1  # Saltar la línea "ejecutar:"
                 
                 # Procesar bloque if
+                tiene_else = False
                 while i < len(lineas) - 1:
                     linea_bloque = lineas[i].strip()
                     
@@ -399,26 +407,48 @@ class TraductorSAM:
                         indentacion -= 1
                         js_code.append("  " * indentacion + "} else {")
                         indentacion += 1
-                        i += 1
+                        tiene_else = True
                         break
-                    elif linea_bloque.startswith("si ") or linea_bloque.startswith("repetir ") or linea_bloque.startswith("hacer ") or linea_bloque.startswith("definir "):
-                        i -= 1  # Retroceder para procesar esta línea en la siguiente iteración
-                        break
-                    elif linea_bloque and not linea_bloque.startswith("ejecutar:"):
-                        # Procesar la línea del bloque if recursivamente
+                    elif (linea_bloque.startswith("si ") and not linea_bloque.startswith("si no:")) or \
+                         linea_bloque.startswith("repetir ") or linea_bloque.startswith("hacer ") or \
+                         linea_bloque.startswith("definir ") or \
+                         linea_bloque.startswith("declarar ") or linea_bloque == "Fin":
+                        indentacion -= 1
+                        js_code.append("  " * indentacion + "}")
                         i -= 1  # Retroceder para procesar esta línea en la siguiente iteración
                         break
                     
                     i += 1
                 
-                if i >= len(lineas) - 1 or not (lineas[i].strip().startswith("si no:")):
+                # Cerrar el bloque if si llegamos al final y no hay un else
+                if i == len(lineas) - 1 and not tiene_else:
                     indentacion -= 1
                     js_code.append("  " * indentacion + "}")
             
             # Continuar con el bloque "si no"
             elif linea.startswith("si no:"):
-                # Ya procesado en el bloque "si"
-                pass
+                # Ya procesado en el bloque "si", pero necesitamos avanzar para procesar el contenido
+                i += 1
+                
+                # Procesar contenido del else
+                while i < len(lineas) - 1:
+                    linea_bloque = lineas[i].strip()
+                    
+                    if (linea_bloque.startswith("si ") and not linea_bloque.startswith("si no:")) or \
+                       linea_bloque.startswith("repetir ") or linea_bloque.startswith("hacer ") or \
+                       linea_bloque.startswith("definir ") or \
+                       linea_bloque.startswith("declarar ") or linea_bloque == "Fin":
+                        indentacion -= 1
+                        js_code.append("  " * indentacion + "}")
+                        i -= 1  # Retroceder para procesar esta línea en la siguiente iteración
+                        break
+                    
+                    i += 1
+                
+                # Cerrar el bloque else si llegamos al final
+                if i == len(lineas) - 1:
+                    indentacion -= 1
+                    js_code.append("  " * indentacion + "}")
             
             # Bucle while
             elif linea.startswith("repetir si "):
@@ -431,18 +461,21 @@ class TraductorSAM:
                 while i < len(lineas) - 1:
                     linea_bloque = lineas[i].strip()
                     
-                    if linea_bloque.startswith("si ") or linea_bloque.startswith("repetir ") or linea_bloque.startswith("hacer ") or linea_bloque.startswith("definir "):
-                        i -= 1  # Retroceder para procesar esta línea en la siguiente iteración
-                        break
-                    elif linea_bloque and not linea_bloque.startswith("ejecutar:"):
-                        # Procesar la línea del bloque while recursivamente
+                    if (linea_bloque.startswith("si ") and not linea_bloque.startswith("si no:")) or \
+                       linea_bloque.startswith("repetir ") or linea_bloque.startswith("hacer ") or \
+                       linea_bloque.startswith("definir ") or \
+                       linea_bloque.startswith("declarar ") or linea_bloque == "Fin":
+                        indentacion -= 1
+                        js_code.append("  " * indentacion + "}")
                         i -= 1  # Retroceder para procesar esta línea en la siguiente iteración
                         break
                     
                     i += 1
                 
-                indentacion -= 1
-                js_code.append("  " * indentacion + "}")
+                # Cerrar el bloque while si llegamos al final
+                if i == len(lineas) - 1:
+                    indentacion -= 1
+                    js_code.append("  " * indentacion + "}")
             
             # Bucle do-while
             elif linea.startswith("hacer hasta"):
@@ -455,18 +488,21 @@ class TraductorSAM:
                 while i < len(lineas) - 1:
                     linea_bloque = lineas[i].strip()
                     
-                    if linea_bloque.startswith("si ") or linea_bloque.startswith("repetir ") or linea_bloque.startswith("hacer ") or linea_bloque.startswith("definir "):
-                        i -= 1  # Retroceder para procesar esta línea en la siguiente iteración
-                        break
-                    elif linea_bloque and not linea_bloque == ":":
-                        # Procesar la línea del bloque do-while recursivamente
+                    if (linea_bloque.startswith("si ") and not linea_bloque.startswith("si no:")) or \
+                       linea_bloque.startswith("repetir ") or linea_bloque.startswith("hacer ") or \
+                       linea_bloque.startswith("definir ") or \
+                       linea_bloque.startswith("declarar ") or linea_bloque == "Fin":
+                        indentacion -= 1
+                        js_code.append("  " * indentacion + f"}} while ({condicion});")
                         i -= 1  # Retroceder para procesar esta línea en la siguiente iteración
                         break
                     
                     i += 1
                 
-                indentacion -= 1
-                js_code.append("  " * indentacion + f"}} while ({condicion});")
+                # Cerrar el bloque do-while si llegamos al final
+                if i == len(lineas) - 1:
+                    indentacion -= 1
+                    js_code.append("  " * indentacion + f"}} while ({condicion});")
             
             # Definición de función
             elif linea.startswith("definir "):
@@ -482,22 +518,22 @@ class TraductorSAM:
                 while i < len(lineas) - 1:
                     linea_bloque = lineas[i].strip()
                     
-                    if linea_bloque.startswith("retornar "):
-                        valor_retorno = linea_bloque.replace("retornar ", "").strip()
-                        js_code.append("  " * indentacion + f"return {valor_retorno};")
-                        i += 1
-                    elif linea_bloque.startswith("si ") or linea_bloque.startswith("repetir ") or linea_bloque.startswith("hacer ") or linea_bloque.startswith("definir "):
-                        i -= 1  # Retroceder para procesar esta línea en la siguiente iteración
-                        break
-                    elif linea_bloque and not linea_bloque == ":":
-                        # Procesar la línea del cuerpo de la función recursivamente
+                    if (linea_bloque.startswith("si ") and not linea_bloque.startswith("si no:")) or \
+                       linea_bloque.startswith("repetir ") or linea_bloque.startswith("hacer ") or \
+                       linea_bloque.startswith("definir ") or \
+                       (linea_bloque.startswith("declarar ") and i > 0 and not lineas[i-1].strip().endswith(":")) or \
+                       linea_bloque == "Fin":
+                        indentacion -= 1
+                        js_code.append("  " * indentacion + "}")
                         i -= 1  # Retroceder para procesar esta línea en la siguiente iteración
                         break
                     
                     i += 1
                 
-                indentacion -= 1
-                js_code.append("  " * indentacion + "}")
+                # Cerrar el bloque de función si llegamos al final
+                if i == len(lineas) - 1:
+                    indentacion -= 1
+                    js_code.append("  " * indentacion + "}")
             
             # Retorno de función
             elif linea.startswith("retornar "):
