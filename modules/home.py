@@ -96,7 +96,8 @@ class Ui_MainWindow(object):
         self.frame_2 = QFrame(self.centralwidget)
         self.frame_2.setObjectName(u"frame_2")
         self.frame_2.setGeometry(QRect(0, 90, 871, 561))
-        self.frame_2.setStyleSheet(u"background-color: rgb(254, 249, 242)")
+        self.frame_2.setStyleSheet(u"background-color: rgb(254, 249, 242)\n"
+        "color: black;")
         self.frame_2.setFrameShape(QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Raised)
         self.horizontalScrollBar = QScrollBar(self.frame_2)
