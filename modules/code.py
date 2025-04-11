@@ -24,6 +24,7 @@ class Ui_Form(object):
         if not Form.objectName():
             Form.setObjectName(u"Form")
         Form.resize(660, 615)
+        Ui_Form.codigo = ""
         self.frame = QFrame(Form)
         self.frame.setObjectName(u"frame")
         self.frame.setGeometry(QRect(0, 0, 661, 81))
@@ -89,9 +90,7 @@ class Ui_Form(object):
         icon4.addFile(u":/icons/icons/alejar.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btnReducir.setIcon(icon4)
         self.btnReducir.setIconSize(QSize(50, 50))
-
         self.horizontalLayout.addWidget(self.btnReducir)
-
         self.frame_Codigo = QFrame(Form)
         self.frame_Codigo.setObjectName(u"frame_Codigo")
         self.frame_Codigo.setGeometry(QRect(-10, 80, 681, 531))
@@ -117,6 +116,11 @@ class Ui_Form(object):
         fileName, _ = QFileDialog.getSaveFileName(None, "Exportar Archivo", "", "Todos los archivos (*);;Archivos de texto (*.txt)", options=options)
         if fileName:
             print(f"Archivo seleccionado: {fileName}")
+    
+    def set_codigo(self, codigo):
+        self.plainTextEdit.setPlainText(codigo)
+        Ui_Form.codigo = codigo
+
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
         self.label.setText("")
@@ -125,25 +129,5 @@ class Ui_Form(object):
         self.btnParar.setText("")
         self.btnAumentar.setText("")
         self.btnReducir.setText("")
-        self.plainTextEdit.setPlainText(QCoreApplication.translate("Form", u"function verificarNumero() {\n"
-"  let numero = parseInt(prompt(\"Introduce un n\u00famero:\"));\n"
-"  \n"
-"  if (numero > 10) {\n"
-"    alert(\"El n\u00famero \" + numero + \" es mayor que 10.\");\n"
-"  } else if (numero < 10) {\n"
-"    alert(\"El n\u00famero \" + numero + \" es menor que 10.\");\n"
-"  } else {\n"
-"    alert(\"El n\u00famero es igual a 10.\");\n"
-"  }\n"
-"}\n"
-"\n"
-"function iniciar() {\n"
-"  let nombre = prompt(\"\u00bfCu\u00e1l es tu nombre?\");\n"
-"  alert(\"Hola, \" + nombre + \"! Vamos a verificar un n\u00famero.\");\n"
-"  \n"
-"  verificarNumero();\n"
-"}\n"
-"\n"
-"iniciar();\n"
-"", None))
+        self.plainTextEdit.setPlainText("")
     # retranslateUi

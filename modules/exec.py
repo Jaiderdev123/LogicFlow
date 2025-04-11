@@ -19,7 +19,6 @@ from PySide6.QtWidgets import (QApplication, QFrame, QLineEdit, QMainWindow,
     QPushButton, QScrollBar, QSizePolicy, QStatusBar,
     QVBoxLayout, QWidget)
 import iconos_rc
-from core import Interprete as core
 class Ui_Ejecucion(object):
     def setupUi(self, Ejecucion):
         Ui_Ejecucion.codigo = ""
@@ -132,6 +131,7 @@ class Ui_Ejecucion(object):
     def set_code(self, code):
         Ui_Ejecucion.codigo = code
         print(code)
+        self.entrada.setText(code)
         
     def retranslateUi(self, Ejecucion):
         Ejecucion.setWindowTitle(QCoreApplication.translate("Ejecucion", u"MainWindow", None))
@@ -142,4 +142,14 @@ class Ui_Ejecucion(object):
         self.btnReducir.setText("")
         self.verCodigoJS.setText("")
     # retranslateUi
+def main():
+    import sys
+    app = QApplication(sys.argv)
+    Ejecucion = QMainWindow()
+    ui = Ui_Ejecucion()
+    ui.setupUi(Ejecucion)
+    Ejecucion.show()
+    sys.exit(app.exec())
+if __name__ == "__main__":
+    main()
 

@@ -1,12 +1,3 @@
-# -*- coding: utf-8 -*-
-
-################################################################################
-## Form generated from reading UI file 'homeQAeLeJ.ui'
-##
-## Created by: Qt User Interface Compiler version 6.4.3
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
@@ -21,6 +12,7 @@ from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
 from iconos_rc import *
 from code import Ui_Form as codeui
 from exec import Ui_Ejecucion as execui
+from core import *
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
@@ -245,6 +237,9 @@ class Ui_MainWindow(object):
         self.code = QMainWindow()
         self.ui = codeui()
         self.ui.setupUi(self.code)
+        traductor = TraductorSAM()
+        codigo = traductor.traducir(self.textEdit.toPlainText())
+        self.ui.set_codigo(codigo)
         self.code.show()
 
     def exportar_codigo(self):
@@ -330,16 +325,23 @@ class Ui_MainWindow(object):
             if ok2:
                 params = parametros if parametros else ""
                 self.textEdit.insertPlainText(f'\t   definir {nombre}({params}): \n\t\t...\n')
+
     def enviar_codigo(self):
         codigo = self.textEdit.toPlainText()
         ejecucion = execui()
         ejecucion.set_code(codigo)
 
+    def traducir_codigo(self, codigo):    
+        codigo = self.textEdit.toPlainText()
+        traductor = TraductorSAM()
+        codigojs = traductor.traducir(codigo)
+        self.abrir_codigo(codigojs)
 
-    def abrir_exec(self):
+    def abrir_exec(self, codigojs):
         self.exec = QMainWindow()
         self.ui = execui()
         self.ui.setupUi(self.exec)
+        self.ui.set_code(codigojs)
         self.exec.show()
 
 if __name__ == "__main__":
