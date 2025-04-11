@@ -111,7 +111,8 @@ class Ui_MainWindow(object):
         self.frame_3.setObjectName(u"frame_3")
         self.frame_3.setGeometry(QRect(660, 0, 211, 551))
         self.frame_3.setStyleSheet(u"background-color: rgb(201, 233, 210);\n"
-"border-color: rgb(0, 0, 0);")
+"border-color: rgb(0, 0, 0);\n" \
+"color: black;")
         self.frame_3.setFrameShape(QFrame.StyledPanel)
         self.frame_3.setFrameShadow(QFrame.Raised)
         self.btnDeclarar = QPushButton(self.frame_3)
@@ -189,7 +190,6 @@ class Ui_MainWindow(object):
         self.btnExportar.clicked.connect(self.exportar_archivo)
         self.verCodigoJS.clicked.connect(self.abrir_codigo)
         self.btnCorrer.clicked.connect(self.abrir_exec)
-        self.btnCorrer.clicked.connect(self.enviar_codigo)
     # setupUi
 
     def retranslateUi(self, MainWindow):
@@ -326,14 +326,10 @@ class Ui_MainWindow(object):
                 params = parametros if parametros else ""
                 self.textEdit.insertPlainText(f'\t   definir {nombre}({params}): \n\t\t...\n')
 
-    def enviar_codigo(self):
-        codigo = self.textEdit.toPlainText()
-        ejecucion = execui()
-        ejecucion.set_code(codigo)
 
     def traducir_codigo(self, codigo):    
         codigo = self.textEdit.toPlainText()
-        traductor = TraductorSAM()
+        traductor = TraductorPseudocodigoJS()
         codigojs = traductor.traducir(codigo)
         self.abrir_codigo(codigojs)
 
