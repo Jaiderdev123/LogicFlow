@@ -86,9 +86,7 @@ class Ui_MainWindow(object):
         )
         self.btnImportar.setIcon(icon)
         self.btnImportar.setIconSize(QSize(50, 50))
-
         self.horizontalLayout.addWidget(self.btnImportar)
-
         self.btnExportar = QPushButton(self.horizontalLayoutWidget)
         self.btnExportar.setObjectName("btnExportar")
         self.btnExportar.setCursor(QCursor(Qt.OpenHandCursor))
@@ -97,7 +95,6 @@ class Ui_MainWindow(object):
         icon1.addFile(":/icons/icons/documento.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btnExportar.setIcon(icon1)
         self.btnExportar.setIconSize(QSize(80, 80))
-
         self.horizontalLayout.addWidget(self.btnExportar)
 
         self.btnCorrer = QPushButton(self.horizontalLayoutWidget)
@@ -331,34 +328,6 @@ class Ui_MainWindow(object):
         return codigo
 
     def mostrar(self):
-        self.textEdit.insertPlainText('\t   mostrar("Texto" o Variable)\n')
-
-    def leer(self):
-        self.textEdit.insertPlainText("\t   leer(Variable)\n")
-
-    def declarar(self):
-        self.textEdit.insertPlainText("\t   declarar nombre_variable tipo: \n")
-
-    def asignar(self):
-        self.textEdit.insertPlainText("\t   nombre_variable = valor\n")
-
-    def establecer_condicion(self):
-        self.textEdit.insertPlainText("\t   si (condicion) ejecutar: \n \t ... \n")
-
-    def repetir_si(self):
-        self.textEdit.insertPlainText(
-            "\t   repetir si (condicion) ejecutar: \n \t ... \n"
-        )
-
-    def hacer_hasta(self):
-        self.textEdit.insertPlainText("\t   hacer hasta (condicion): \n \t ... \n")
-
-    def definir_funcion(self):
-        self.textEdit.insertPlainText(
-            "\t   definir nombre_funcion(parametros): \n \t ... \n"
-        )
-
-    def mostrar(self):
         opciones = ["Texto", "Variable"]
         tipo, ok1 = QInputDialog.getItem(
             None, "Tipo de Salida", "Seleccione el tipo:", opciones, 0, False
@@ -369,20 +338,20 @@ class Ui_MainWindow(object):
                     None, "Mostrar", "Ingrese el texto a mostrar:"
                 )
                 if ok2 and texto:
-                    self.textEdit.insertPlainText(f'\t   mostrar("{texto}")\n')
+                    self.textEdit.insertPlainText(f'\tmostrar("{texto}")\n')
             elif tipo == "Variable":
                 variable, ok2 = QInputDialog.getText(
                     None, "Mostrar", "Ingrese el nombre de la variable a mostrar:"
                 )
                 if ok2 and variable:
-                    self.textEdit.insertPlainText(f"\t   mostrar({variable})\n")
+                    self.textEdit.insertPlainText(f"\tmostrar({variable})\n")
 
     def leer(self):
         variable, ok = QInputDialog.getText(
             None, "Leer", "Ingrese el nombre de la variable:"
         )
         if ok and variable:
-            self.textEdit.insertPlainText(f"\t   leer({variable})\n")
+            self.textEdit.insertPlainText(f"\tleer({variable})\n")
 
     def declarar(self):
         nombre, ok1 = QInputDialog.getText(
@@ -394,7 +363,7 @@ class Ui_MainWindow(object):
                 None, "Tipo de Variable", "Seleccione el tipo:", tipos, 0, False
             )
             if ok2 and tipo:
-                self.textEdit.insertPlainText(f"\t   declarar {nombre} tipo: {tipo}\n")
+                self.textEdit.insertPlainText(f"\tdeclarar {nombre} tipo: {tipo}\n")
 
     def asignar(self):
         variable, ok1 = QInputDialog.getText(
@@ -413,7 +382,7 @@ class Ui_MainWindow(object):
         )
         if ok and condicion:
             self.textEdit.insertPlainText(
-                f"\t   si ({condicion}) ejecutar: \n\t\t...\n"
+                f"\t   si ({condicion}) ejecutar: \n\t...\n"
             )
 
     def repetir_si(self):
@@ -422,7 +391,7 @@ class Ui_MainWindow(object):
         )
         if ok and condicion:
             self.textEdit.insertPlainText(
-                f"\t   repetir si ({condicion}) ejecutar: \n\t\t...\n"
+                f"\t   repetir si ({condicion}) ejecutar: \n\t...\n"
             )
 
     def hacer_hasta(self):
@@ -445,12 +414,12 @@ class Ui_MainWindow(object):
             if ok2:
                 params = parametros if parametros else ""
                 self.textEdit.insertPlainText(
-                    f"\t   definir {nombre}({params}): \n\t\t...\n"
+                    f"\t   definir {nombre}({params}): \n\t...\n"
                 )
 
     def traducir_codigo(self, codigo):
         codigo = self.textEdit.toPlainText()
-        traductor = TraductorPseudocodigoJS()
+        traductor = TraductorJS()
         codigojs = traductor.traducir(codigo)
         self.abrir_codigo(codigojs)
 
@@ -460,6 +429,7 @@ class Ui_MainWindow(object):
         self.ui.setupUi(self.exec)
         self.ui.set_code(codigojs)
         self.exec.show()
+    
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)
