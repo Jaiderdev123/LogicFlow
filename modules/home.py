@@ -230,6 +230,9 @@ class Ui_MainWindow(object):
             'font: 600 12pt "Cascadia Code SemiBold";\n'
             "border-radius: 10px;"
         )
+        self.btnDefinirFuncion.setEnabled(False)
+        self.btnDefinirFuncion.setVisible(False)
+        self.label.setVisible(False)
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -423,13 +426,14 @@ class Ui_MainWindow(object):
         codigojs = traductor.traducir(codigo)
         self.abrir_codigo(codigojs)
 
-    def abrir_exec(self, codigojs):
+    def abrir_exec(self):
         self.exec = QMainWindow()
         self.ui = execui()
         self.ui.setupUi(self.exec)
-        self.ui.set_code(codigojs)
+        codigo = self.textEdit.toPlainText()
+        self.ui.setCodigo(codigo)
         self.exec.show()
-    
+
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)

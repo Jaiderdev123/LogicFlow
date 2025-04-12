@@ -17,11 +17,69 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QLineEdit, QMainWindow,
     QPushButton, QScrollBar, QSizePolicy, QStatusBar,
-    QVBoxLayout, QWidget)
+    QVBoxLayout, QWidget, QTextEdit)
+import sys
 import iconos_rc
+from compilador import Compilador
+import threading
+from io import StringIO
+
+# Clase para redirigir la salida estándar
+class OutputRedirector(StringIO):
+    def __init__(self, text_widget):
+        super().__init__()
+        self.text_widget = text_widget
+        self.old_stdout = sys.stdout
+        
+    def write(self, text):
+        if text.strip():
+            self.text_widget.append(f'<span style="color: blue;">{text}</span>')
+        return self.old_stdout.write(text)
+        
+    def flush(self):
+        self.old_stdout.flush()
+
+# Compilador extendido para usar la interfaz de chat
+class CompiladorChat(Compilador):
+    def __init__(self, ui):
+        super().__init__()
+        self.ui = ui
+        self.esperando_entrada = False
+        self.variable_esperando = None
+        
+    def leer(self, variable):
+        """Sobrecarga el método leer para usar la interfaz gráfica"""
+        self.variable_esperando = variable
+        self.esperando_entrada = True
+        self.ui.mostrar_prompt(f"")
+        
+        # Esperar hasta que la entrada sea procesada
+        while self.esperando_entrada:
+            QApplication.processEvents()
+            threading.Event().wait(0.1)
+                
+    def procesar_entrada(self, texto):
+        """Procesa la entrada desde la interfaz"""
+        if self.esperando_entrada and self.variable_esperando:
+            self.ui.mostrar_entrada(f"> {texto}")
+            valor = self.parse_valor(texto)
+            self.variables[self.variable_esperando] = valor
+            self.esperando_entrada = False
+            self.variable_esperando = None
+            return True
+        return False
+        
+    def mostrar(self, *mensajes):
+        """Sobrecarga mostrar para usar la interfaz gráfica"""
+        mensaje = ' '.join(str(m) for m in mensajes)
+        self.ui.mostrar_salida(mensaje)
+
 class Ui_Ejecucion(object):
     def setupUi(self, Ejecucion):
         Ui_Ejecucion.codigo = ""
+        self.ejecucion_activa = False
+        self.compilador = None
+        
         if not Ejecucion.objectName():
             Ejecucion.setObjectName(u"Ejecucion")
         Ejecucion.resize(657, 519)
@@ -48,14 +106,24 @@ class Ui_Ejecucion(object):
         self.frame_2 = QFrame(self.frame)
         self.frame_2.setObjectName(u"frame_2")
         self.frame_2.setGeometry(QRect(90, 0, 581, 461))
-        self.frame_2.setStyleSheet(u"background-image: url(:/fondos/fondos/fondo.jpg);\n"
-"background-whidt: 300px;")
+        self.frame_2.setStyleSheet(u"background-color: rgb(254, 249, 242);")
         self.frame_2.setFrameShape(QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Raised)
+        
+        # Reemplazamos el fondo de imagen con un QTextEdit para mostrar el chat
+        self.chat_output = QTextEdit(self.frame_2)
+        self.chat_output.setObjectName(u"chat_output")
+        self.chat_output.setGeometry(QRect(10, 10, 560, 440))
+        self.chat_output.setReadOnly(True)
+        self.chat_output.setStyleSheet(u"background-color: rgb(255, 255, 255); font: 12pt \"Consolas\";")
+        
         self.verticalScrollBar = QScrollBar(self.frame_2)
         self.verticalScrollBar.setObjectName(u"verticalScrollBar")
         self.verticalScrollBar.setGeometry(QRect(550, 0, 16, 451))
         self.verticalScrollBar.setOrientation(Qt.Vertical)
+        # Conectar el scroll bar con el chat_output
+        self.chat_output.setVerticalScrollBar(self.verticalScrollBar)
+        
         self.frame_3 = QFrame(self.frame)
         self.frame_3.setObjectName(u"frame_3")
         self.frame_3.setGeometry(QRect(0, 0, 91, 501))
@@ -125,17 +193,131 @@ class Ui_Ejecucion(object):
         Ejecucion.setStatusBar(self.statusbar)
         self.retranslateUi(Ejecucion)
         QMetaObject.connectSlotsByName(Ejecucion)
-
+        
+        # Conectar señales a slots
+        self.btnCorrer.clicked.connect(self.ejecutar_codigo)
+        self.pushButton.clicked.connect(self.enviar_entrada)
+        self.entrada.returnPressed.connect(self.enviar_entrada)
+        self.btnParar.clicked.connect(self.detener_ejecucion)
+        self.btnAumentar.clicked.connect(self.aumentar_fuente)
+        self.btnReducir.clicked.connect(self.reducir_fuente)
     # setupUi
         
     def retranslateUi(self, Ejecucion):
-        Ejecucion.setWindowTitle(QCoreApplication.translate("Ejecucion", u"MainWindow", None))
+        Ejecucion.setWindowTitle(QCoreApplication.translate("Ejecucion", u"Ejecución", None))
         self.pushButton.setText("")
         self.btnCorrer.setText("")
         self.btnParar.setText("")
         self.btnAumentar.setText("")
         self.btnReducir.setText("")
         self.verCodigoJS.setText("")
+        self.entrada.setPlaceholderText(QCoreApplication.translate("Ejecucion", u"Ingrese datos aquí...", None))
+
+    def setCodigo(self, codigo):
+        """Establece el código a ejecutar"""
+        Ui_Ejecucion.codigo = codigo
+        self.chat_output.clear()
+        self.mostrar_sistema("Código cargado. Presione el botón Play para ejecutar.")
+
+    def mostrar_sistema(self, mensaje):
+        """Muestra un mensaje del sistema en el chat"""
+        self.chat_output.append(f'<span style="color: gray;"># {mensaje}</span>')
+        self.auto_scroll()
+        
+    def mostrar_salida(self, mensaje):
+        """Muestra una salida del programa en el chat"""
+        self.chat_output.append(f'<span style="color: blue;">{mensaje}</span>')
+        self.auto_scroll()
+        
+    def mostrar_prompt(self, mensaje):
+        """Muestra un mensaje de solicitud de entrada en el chat"""
+        self.chat_output.append(f'<span style="color: green;">{mensaje}</span>')
+        self.auto_scroll()
+        
+    def mostrar_entrada(self, mensaje):
+        """Muestra la entrada del usuario en el chat"""
+        self.chat_output.append(f'<span style="color: purple;">{mensaje}</span>')
+        self.auto_scroll()
+    
+    def auto_scroll(self):
+        """Desplaza automáticamente al final del chat"""
+        self.chat_output.verticalScrollBar().setValue(
+            self.chat_output.verticalScrollBar().maximum()
+        )
+
+    def ejecutar_codigo(self):
+        """Inicia la ejecución del código"""
+        if not self.ejecucion_activa and Ui_Ejecucion.codigo:
+            self.ejecucion_activa = True
+            self.chat_output.clear()
+            self.mostrar_sistema("Iniciando ejecución...")
+            
+            # Crear el compilador para chat
+            self.compilador = CompiladorChat(self)
+            
+            # Redirigir stdout a nuestro widget
+            self.stdout_redirector = OutputRedirector(self.chat_output)
+            sys.stdout = self.stdout_redirector
+            
+            # Crear un hilo para ejecutar el código sin bloquear la interfaz
+            self.thread = threading.Thread(target=self.ejecutar_en_hilo)
+            self.thread.daemon = True
+            self.thread.start()
+            
+    def ejecutar_en_hilo(self):
+        """Ejecuta el código en un hilo separado"""
+        try:
+            self.compilador.ejecutar(Ui_Ejecucion.codigo)
+            # Si no está esperando entrada, finalizar
+            if not self.compilador.esperando_entrada:
+                self.finalizar_ejecucion()
+        except Exception as e:
+            self.mostrar_sistema(f"Error: {str(e)}")
+            self.finalizar_ejecucion()
+            
+    def enviar_entrada(self):
+        """Procesa la entrada del usuario"""
+        texto = self.entrada.text()
+        if not texto:
+            return
+            
+        self.entrada.clear()
+        
+        if self.compilador and self.compilador.esperando_entrada:
+            self.compilador.procesar_entrada(texto)
+        else:
+            self.mostrar_sistema("No hay una solicitud de entrada activa.")
+            
+    def detener_ejecucion(self):
+        """Detiene la ejecución del código"""
+        if self.ejecucion_activa:
+            self.mostrar_sistema("Ejecución detenida por el usuario.")
+            self.finalizar_ejecucion()
+            
+    def finalizar_ejecucion(self):
+        """Finaliza la ejecución y restaura el estado"""
+        self.ejecucion_activa = False
+        # Restaurar stdout
+        if hasattr(self, 'stdout_redirector'):
+            sys.stdout = self.stdout_redirector.old_stdout
+        self.mostrar_sistema("Ejecución finalizada.")
+        
+    def aumentar_fuente(self):
+        """Aumenta el tamaño de la fuente"""
+        font = self.chat_output.font()
+        current_size = font.pointSize()
+        if current_size < 20:  # Límite máximo
+            font.setPointSize(current_size + 1)
+            self.chat_output.setFont(font)
+            
+    def reducir_fuente(self):
+        """Reduce el tamaño de la fuente"""
+        font = self.chat_output.font()
+        current_size = font.pointSize()
+        if current_size > 8:  # Límite mínimo
+            font.setPointSize(current_size - 1)
+            self.chat_output.setFont(font)
+    
     # retranslateUi
 def main():
     import sys
@@ -147,4 +329,3 @@ def main():
     sys.exit(app.exec())
 if __name__ == "__main__":
     main()
-
