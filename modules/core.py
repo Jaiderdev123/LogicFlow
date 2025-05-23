@@ -14,43 +14,34 @@ class TraductorJS:
         """Traduce el código fuente completo a JavaScript."""
         lineas = codigo_fuente.strip().split('\n')
         self.resultado = []
-        
         # Verificar estructura básica
         if not lineas or not lineas[0].startswith("Inicio") or lineas[-1] != "Fin":
             return "Error: El código debe comenzar con 'Inicio' y terminar con 'Fin'"
-        
         # Extraer nombre del algoritmo
         nombre_algoritmo = lineas[0][lineas[0].find("(")+1:lineas[0].find(")")]
         self.agregar_linea(f"// Programa: {nombre_algoritmo}")
         self.agregar_linea("")
-        
         # Procesar líneas (omitiendo Inicio y Fin)
         i = 1
         while i < len(lineas) - 1:
             i = self.procesar_linea(lineas, i)
-        
         # Cerrar bloques que quedaron abiertos
         while self.bloques_abiertos:
             tipo = self.bloques_abiertos.pop()
             self.cerrar_bloque(tipo)
-            
         return "\n".join(self.resultado)
     
     def procesar_linea(self, lineas, indice):
         """Procesa una línea de código y actualiza el índice si es necesario."""
         linea = lineas[indice].strip()
-        
         if not linea:
             return indice + 1
-            
         # Declaración de variables
         if linea.startswith("declarar "):
             self.procesar_declaracion(linea)
-            
         # Mostrar en consola
         elif linea.startswith("mostrar("):
             self.procesar_mostrar(linea)
-            
         # Leer entrada
         elif linea.startswith("leer("):
             self.procesar_leer(linea)
@@ -123,8 +114,6 @@ class TraductorJS:
         var_nombre = linea[linea.find("(")+1:linea.rfind(")")]
         # En JavaScript usamos prompt para entrada
         self.agregar_linea(f"{var_nombre} = prompt('Ingrese {var_nombre}');")
-        # Convertir automáticamente a número
-        self.agregar_linea(f"if (!isNaN({var_nombre})) {var_nombre} = Number({var_nombre});")
     
     def procesar_asignacion(self, linea):
         """Procesa una asignación de variable."""
@@ -155,7 +144,10 @@ class TraductorJS:
             
         # Verificar si hay un else
         if siguiente_indice < len(lineas) and lineas[siguiente_indice].strip() == "si no:":
-            self.procesar_else()
+            # Cerrar bloque del if antes de else
+            self.indentacion -= 1
+            self.agregar_linea("} else {")
+            self.indentacion += 1
             
             # Procesar el bloque del else
             siguiente_indice += 1
@@ -171,7 +163,6 @@ class TraductorJS:
             return siguiente_indice + 1
             
         return siguiente_indice
-    
     def procesar_else(self):
         """Procesa una estructura condicional else."""
         self.indentacion -= 1

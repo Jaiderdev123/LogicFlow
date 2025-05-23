@@ -158,35 +158,15 @@ class Ui_Ejecucion(object):
 
         self.verticalLayout.addWidget(self.btnParar)
 
-        self.btnAumentar = QPushButton(self.verticalLayoutWidget)
-        self.btnAumentar.setObjectName(u"btnAumentar")
-        self.btnAumentar.setStyleSheet(u"background-color: rgba(0,0,0,0);")
-        icon3 = QIcon()
-        icon3.addFile(u":/icons/icons/acercarse.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnAumentar.setIcon(icon3)
-        self.btnAumentar.setIconSize(QSize(50, 50))
-
-        self.verticalLayout.addWidget(self.btnAumentar)
-
-        self.btnReducir = QPushButton(self.verticalLayoutWidget)
-        self.btnReducir.setObjectName(u"btnReducir")
-        self.btnReducir.setStyleSheet(u"background-color: rgba(0,0,0,0);")
-        icon4 = QIcon()
-        icon4.addFile(u":/icons/icons/alejar.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnReducir.setIcon(icon4)
-        self.btnReducir.setIconSize(QSize(50, 50))
-
-        self.verticalLayout.addWidget(self.btnReducir)
-
-        self.verCodigoJS = QPushButton(self.verticalLayoutWidget)
-        self.verCodigoJS.setObjectName(u"verCodigoJS")
-        self.verCodigoJS.setCursor(QCursor(Qt.OpenHandCursor))
-        self.verCodigoJS.setStyleSheet(u"background-color: rgba(0,0,0,0);")
-        icon5 = QIcon()
-        icon5.addFile(u":/icons/icons/js.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.verCodigoJS.setIcon(icon5)
-        self.verCodigoJS.setIconSize(QSize(50, 50))
-        self.verticalLayout.addWidget(self.verCodigoJS)
+        # self.verCodigoJS = QPushButton(self.verticalLayoutWidget)
+        # self.verCodigoJS.setObjectName(u"verCodigoJS")
+        # self.verCodigoJS.setCursor(QCursor(Qt.OpenHandCursor))
+        # self.verCodigoJS.setStyleSheet(u"background-color: rgba(0,0,0,0);")
+        # icon5 = QIcon()
+        # icon5.addFile(u":/icons/icons/js.png", QSize(), QIcon.Normal, QIcon.Off)
+        # self.verCodigoJS.setIcon(icon5)
+        # self.verCodigoJS.setIconSize(QSize(50, 50))
+        # self.verticalLayout.addWidget(self.verCodigoJS)
         Ejecucion.setCentralWidget(self.centralwidget)
         self.statusbar = QStatusBar(Ejecucion)
         self.statusbar.setObjectName(u"statusbar")
@@ -199,18 +179,13 @@ class Ui_Ejecucion(object):
         self.pushButton.clicked.connect(self.enviar_entrada)
         self.entrada.returnPressed.connect(self.enviar_entrada)
         self.btnParar.clicked.connect(self.detener_ejecucion)
-        self.btnAumentar.clicked.connect(self.aumentar_fuente)
-        self.btnReducir.clicked.connect(self.reducir_fuente)
-    # setupUi
-        
+
     def retranslateUi(self, Ejecucion):
         Ejecucion.setWindowTitle(QCoreApplication.translate("Ejecucion", u"Ejecución", None))
         self.pushButton.setText("")
         self.btnCorrer.setText("")
         self.btnParar.setText("")
-        self.btnAumentar.setText("")
-        self.btnReducir.setText("")
-        self.verCodigoJS.setText("")
+        # self.verCodigoJS.setText("")
         self.entrada.setPlaceholderText(QCoreApplication.translate("Ejecucion", u"Ingrese datos aquí...", None))
 
     def setCodigo(self, codigo):
@@ -301,24 +276,7 @@ class Ui_Ejecucion(object):
         if hasattr(self, 'stdout_redirector'):
             sys.stdout = self.stdout_redirector.old_stdout
         self.mostrar_sistema("Ejecución finalizada.")
-        
-    def aumentar_fuente(self):
-        """Aumenta el tamaño de la fuente"""
-        font = self.chat_output.font()
-        current_size = font.pointSize()
-        if current_size < 20:  # Límite máximo
-            font.setPointSize(current_size + 1)
-            self.chat_output.setFont(font)
-            
-    def reducir_fuente(self):
-        """Reduce el tamaño de la fuente"""
-        font = self.chat_output.font()
-        current_size = font.pointSize()
-        if current_size > 8:  # Límite mínimo
-            font.setPointSize(current_size - 1)
-            self.chat_output.setFont(font)
-    
-    # retranslateUi
+
 def main():
     import sys
     app = QApplication(sys.argv)

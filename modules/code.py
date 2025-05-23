@@ -50,29 +50,7 @@ class Ui_Form(object):
         icon.addFile(u":/icons/icons/documento.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btnExportar.setIcon(icon)
         self.btnExportar.setIconSize(QSize(80, 80))
-
         self.horizontalLayout.addWidget(self.btnExportar)
-
-        self.btnCorrer = QPushButton(self.horizontalLayoutWidget)
-        self.btnCorrer.setObjectName(u"btnCorrer")
-        self.btnCorrer.setStyleSheet(u"background-color: rgba(0,0,0,0);")
-        icon1 = QIcon()
-        icon1.addFile(u":/icons/icons/boton-de-play.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnCorrer.setIcon(icon1)
-        self.btnCorrer.setIconSize(QSize(50, 50))
-
-        self.horizontalLayout.addWidget(self.btnCorrer)
-
-        self.btnParar = QPushButton(self.horizontalLayoutWidget)
-        self.btnParar.setObjectName(u"btnParar")
-        self.btnParar.setStyleSheet(u"background-color: rgba(0,0,0,0);")
-        icon2 = QIcon()
-        icon2.addFile(u":/icons/icons/detener.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnParar.setIcon(icon2)
-        self.btnParar.setIconSize(QSize(50, 50))
-
-        self.horizontalLayout.addWidget(self.btnParar)
-
         self.btnAumentar = QPushButton(self.horizontalLayoutWidget)
         self.btnAumentar.setObjectName(u"btnAumentar")
         self.btnAumentar.setStyleSheet(u"background-color: rgba(0,0,0,0);")
@@ -104,12 +82,12 @@ class Ui_Form(object):
         font.setFamilies([u"Fira Code SemiBold"])
         font.setBold(True)
         self.plainTextEdit.setFont(font)
-
         self.retranslateUi(Form)
-
         QMetaObject.connectSlotsByName(Form)
         self.btnExportar.clicked.connect(self.exportar_archivo)
-    # setupUi
+        self.btnAumentar.clicked.connect(self.aumentar_fuente)
+        self.btnReducir.clicked.connect(self.reducir_fuente)
+
     def exportar_archivo(self):
         options = QFileDialog.Options()
         options |= QFileDialog.ReadOnly
@@ -117,6 +95,16 @@ class Ui_Form(object):
         if fileName:
             print(f"Archivo seleccionado: {fileName}")
     
+    def reducir_fuente(self):
+        font = self.plainTextEdit.font()
+        font.setPointSize(font.pointSize() - 1)
+        self.plainTextEdit.setFont(font)
+
+    def aumentar_fuente(self):
+        font = self.plainTextEdit.font()
+        font.setPointSize(font.pointSize() + 1)
+        self.plainTextEdit.setFont(font)
+
     def set_codigo(self, codigo):
         self.plainTextEdit.setPlainText(codigo)
         Ui_Form.codigo = codigo
@@ -125,9 +113,8 @@ class Ui_Form(object):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
         self.label.setText("")
         self.btnExportar.setText("")
-        self.btnCorrer.setText("")
-        self.btnParar.setText("")
+        # self.btnCorrer.setText("")
+        # self.btnParar.setText("")
         self.btnAumentar.setText("")
         self.btnReducir.setText("")
         self.plainTextEdit.setPlainText("")
-    # retranslateUi

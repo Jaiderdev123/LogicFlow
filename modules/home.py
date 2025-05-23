@@ -96,7 +96,6 @@ class Ui_MainWindow(object):
         self.btnExportar.setIcon(icon1)
         self.btnExportar.setIconSize(QSize(80, 80))
         self.horizontalLayout.addWidget(self.btnExportar)
-
         self.btnCorrer = QPushButton(self.horizontalLayoutWidget)
         self.btnCorrer.setObjectName("btnCorrer")
         self.btnCorrer.setCursor(QCursor(Qt.OpenHandCursor))
@@ -107,9 +106,7 @@ class Ui_MainWindow(object):
         )
         self.btnCorrer.setIcon(icon2)
         self.btnCorrer.setIconSize(QSize(50, 50))
-
         self.horizontalLayout.addWidget(self.btnCorrer)
-
         self.verCodigoJS = QPushButton(self.horizontalLayoutWidget)
         self.verCodigoJS.setObjectName("verCodigoJS")
         self.verCodigoJS.setCursor(QCursor(Qt.OpenHandCursor))
@@ -120,17 +117,6 @@ class Ui_MainWindow(object):
         self.verCodigoJS.setIconSize(QSize(50, 50))
 
         self.horizontalLayout.addWidget(self.verCodigoJS)
-
-        self.btnAyuda = QPushButton(self.horizontalLayoutWidget)
-        self.btnAyuda.setObjectName("btnAyuda")
-        self.btnAyuda.setCursor(QCursor(Qt.OpenHandCursor))
-        self.btnAyuda.setStyleSheet("background-color: rgba(0,0,0,0);")
-        icon4 = QIcon()
-        icon4.addFile(":/icons/icons/ayuda.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btnAyuda.setIcon(icon4)
-        self.btnAyuda.setIconSize(QSize(50, 50))
-
-        self.horizontalLayout.addWidget(self.btnAyuda)
 
         self.frame_2 = QFrame(self.centralwidget)
         self.frame_2.setObjectName("frame_2")
@@ -212,15 +198,15 @@ class Ui_MainWindow(object):
             'font: 600 12pt "Cascadia Code SemiBold";\n'
             "border-radius: 10px;"
         )
-        self.btnHacerHasta = QPushButton(self.frame_3)
-        self.btnHacerHasta.setObjectName("btnHacerHasta")
-        self.btnHacerHasta.setGeometry(QRect(10, 310, 191, 41))
-        self.btnHacerHasta.setCursor(QCursor(Qt.OpenHandCursor))
-        self.btnHacerHasta.setStyleSheet(
-            "background-color: rgb(251, 216, 124);\n"
-            'font: 600 12pt "Cascadia Code SemiBold";\n'
-            "border-radius: 10px;"
-        )
+        # self.btnHacerHasta = QPushButton(self.frame_3)
+        # self.btnHacerHasta.setObjectName("btnHacerHasta")
+        # self.btnHacerHasta.setGeometry(QRect(10, 310, 191, 41))
+        # self.btnHacerHasta.setCursor(QCursor(Qt.OpenHandCursor))
+        # self.btnHacerHasta.setStyleSheet(
+        #     "background-color: rgb(251, 216, 124);\n"
+        #     'font: 600 12pt "Cascadia Code SemiBold";\n'
+        #     "border-radius: 10px;"
+        # )
         self.btnDefinirFuncion = QPushButton(self.frame_3)
         self.btnDefinirFuncion.setObjectName("btnDefinirFuncion")
         self.btnDefinirFuncion.setGeometry(QRect(10, 360, 191, 41))
@@ -230,9 +216,10 @@ class Ui_MainWindow(object):
             'font: 600 12pt "Cascadia Code SemiBold";\n'
             "border-radius: 10px;"
         )
+
         self.btnDefinirFuncion.setEnabled(False)
         self.btnDefinirFuncion.setVisible(False)
-        self.label.setVisible(False)
+        self.label.setVisible(True)
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -246,7 +233,6 @@ class Ui_MainWindow(object):
         self.btnAsignar.clicked.connect(self.asignar)
         self.btnCondicion.clicked.connect(self.establecer_condicion)
         self.btnRepetirSi.clicked.connect(self.repetir_si)
-        self.btnHacerHasta.clicked.connect(self.hacer_hasta)
         self.btnDefinirFuncion.clicked.connect(self.definir_funcion)
         self.btnImportar.clicked.connect(self.importar_archivo)
         self.btnExportar.clicked.connect(self.exportar_archivo)
@@ -264,7 +250,7 @@ class Ui_MainWindow(object):
         self.btnExportar.setText("")
         self.btnCorrer.setText("")
         self.verCodigoJS.setText("")
-        self.btnAyuda.setText("")
+        # self.btnAyuda.setText("")
         self.btnDeclarar.setText(
             QCoreApplication.translate("MainWindow", "Declarar Variable", None)
         )
@@ -281,9 +267,9 @@ class Ui_MainWindow(object):
         self.btnRepetirSi.setText(
             QCoreApplication.translate("MainWindow", "Repetir Si", None)
         )
-        self.btnHacerHasta.setText(
-            QCoreApplication.translate("MainWindow", "Hacer Hasta", None)
-        )
+        # self.btnHacerHasta.setText(
+        #     QCoreApplication.translate("MainWindow", "Hacer Hasta", None)
+        # )
         self.btnDefinirFuncion.setText(
             QCoreApplication.translate("MainWindow", "Definir Funci\u00f3n", None)
         )
@@ -385,7 +371,7 @@ class Ui_MainWindow(object):
         )
         if ok and condicion:
             self.textEdit.insertPlainText(
-                f"\t   si ({condicion}) ejecutar: \n\t...\n"
+                f"\t   si ({condicion}) ejecutar: \n\t\t...\n\t   si no: \n\t\t...\n"
             )
 
     def repetir_si(self):
@@ -425,6 +411,15 @@ class Ui_MainWindow(object):
         traductor = TraductorJS()
         codigojs = traductor.traducir(codigo)
         self.abrir_codigo(codigojs)
+    
+    def aumentar_fuente(self):
+        font = self.textEdit.font()
+        font.setPointSize(font.pointSize() + 1)
+        self.textEdit.setFont(font)
+    def reducir_fuente(self):
+        font = self.textEdit.font()
+        font.setPointSize(font.pointSize() - 1)
+        self.textEdit.setFont(font)
 
     def abrir_exec(self):
         self.exec = QMainWindow()
@@ -433,6 +428,7 @@ class Ui_MainWindow(object):
         codigo = self.textEdit.toPlainText()
         self.ui.setCodigo(codigo)
         self.exec.show()
+
 
 if __name__ == "__main__":
     import sys
