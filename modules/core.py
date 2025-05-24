@@ -187,34 +187,33 @@ class TraductorJS:
         while siguiente_indice < len(lineas) and lineas[siguiente_indice].strip() != "fin repetir":
             siguiente_indice = self.procesar_linea(lineas, siguiente_indice)
         
-        # Si encontramos el fin del bloque while, cerrarlo
+        # Cerrar el bloque si corresponde
         if siguiente_indice < len(lineas) and lineas[siguiente_indice].strip() == "fin repetir":
             if "while" in self.bloques_abiertos:
                 self.bloques_abiertos.remove("while")
             self.indentacion -= 1
             self.agregar_linea("}")
             return siguiente_indice + 1
-            
+        
+        # Si no se encontró 'fin repetir', solo cerrar el bloque
+        self.indentacion -= 1
+        self.agregar_linea("}")
         return siguiente_indice
     
     def procesar_do_while(self, lineas, indice):
         """Procesa un bucle do-while."""
         linea = lineas[indice].strip()
-        
         # Extraer condición
         condicion = linea[linea.find("(")+1:linea.rfind(")")]
         # Reemplazar operadores lógicos
         condicion = condicion.replace(" y ", " && ").replace(" o ", " || ")
-        
         self.agregar_linea("do {")
         self.indentacion += 1
         self.bloques_abiertos.append("do_while")
-        
         # Procesar el bloque del do-while
         siguiente_indice = indice + 1
         while siguiente_indice < len(lineas) and lineas[siguiente_indice].strip() != "fin hacer":
             siguiente_indice = self.procesar_linea(lineas, siguiente_indice)
-        
         # Si encontramos el fin del bloque do-while, cerrarlo
         if siguiente_indice < len(lineas) and lineas[siguiente_indice].strip() == "fin hacer":
             if "do_while" in self.bloques_abiertos:
@@ -222,7 +221,6 @@ class TraductorJS:
             self.indentacion -= 1
             self.agregar_linea(f"}} while ({condicion});")
             return siguiente_indice + 1
-            
         return siguiente_indice
     
     def procesar_funcion(self, lineas, indice):

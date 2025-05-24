@@ -111,6 +111,7 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
+        self.plainTextEdit.setStyleSheet(u"color: black;")
         self.label.setText("")
         self.btnExportar.setText("")
         # self.btnCorrer.setText("")

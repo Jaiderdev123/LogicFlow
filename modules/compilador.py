@@ -86,6 +86,7 @@ class Compilador:
     def evaluar_operacion(self, operacion, op1, op2, linea_num=None):
         """Evalúa operaciones aritméticas básicas"""
         try:
+            # Evaluar los operandos
             op1_val = self.evaluar_expresion(op1)
             op2_val = self.evaluar_expresion(op2)
             
@@ -95,12 +96,15 @@ class Compilador:
                 op2_val = float(op2_val) if isinstance(op2_val, str) and op2_val.replace('.', '', 1).isdigit() else op2_val
             except:
                 pass
+            
             # Validar que ambos operandos sean valores numéricos
             if operacion in ['suma', 'resta', 'multiplicar', 'dividir']:
-                if not isinstance(op1_val, (int, float)) and operacion != 'suma':
+                if not isinstance(op1_val, (int, float)):
                     raise CompiladorError(f"El primer operando debe ser numérico para la operación {operacion}, pero es {type(op1_val).__name__}", linea_num)
-                if not isinstance(op2_val, (int, float)) and operacion != 'suma':
+                if not isinstance(op2_val, (int, float)):
                     raise CompiladorError(f"El segundo operando debe ser numérico para la operación {operacion}, pero es {type(op2_val).__name__}", linea_num)
+            
+            # Realizar la operación
             if operacion == 'suma':
                 return op1_val + op2_val
             elif operacion == 'resta':
@@ -206,6 +210,7 @@ class Compilador:
             op1 = match.group(2).strip()
             op2 = match.group(3).strip()
             
+            # Evaluar la operación
             resultado = self.evaluar_operacion(operacion, op1, op2, linea_num)
             
             if var is not None:

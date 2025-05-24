@@ -29,6 +29,7 @@ from PySide6.QtGui import (
     QPixmap,
     QRadialGradient,
     QTransform,
+    QTextCursor,
 )
 from PySide6.QtWidgets import (
     QApplication,
@@ -49,6 +50,24 @@ from iconos_rc import *
 from code import Ui_Form as codeui
 from exec import Ui_Ejecucion as execui
 from core import *
+
+
+class CodeEditor(QTextEdit):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Tab:
+            cursor = self.textCursor()
+            cursor.insertText("    ")  # Inserta 4 espacios como tabulación
+            return
+        elif event.key() == Qt.Key_Backtab:  # Shift + Tab para eliminar indentación
+            cursor = self.textCursor()
+            cursor.movePosition(QTextCursor.StartOfBlock, QTextCursor.KeepAnchor)
+            if cursor.selectedText().startswith("    "):  # Si hay 4 espacios al inicio
+                cursor.removeSelectedText()
+            return
+        super().keyPressEvent(event)
 
 
 class Ui_MainWindow(object):
@@ -130,7 +149,7 @@ class Ui_MainWindow(object):
         self.horizontalScrollBar.setObjectName("horizontalScrollBar")
         self.horizontalScrollBar.setGeometry(QRect(10, 545, 991, 21))
         self.horizontalScrollBar.setOrientation(Qt.Horizontal)
-        self.textEdit = QTextEdit(self.frame_2)
+        self.textEdit = CodeEditor(self.frame_2)
         self.textEdit.setObjectName("textEdit")
         self.textEdit.setGeometry(QRect(0, 0, 661, 561))
         self.textEdit.setStyleSheet('font: 15pt "Fira Code";')
@@ -380,16 +399,7 @@ class Ui_MainWindow(object):
         )
         if ok and condicion:
             self.textEdit.insertPlainText(
-                f"\t   repetir si ({condicion}) ejecutar: \n\t...\n"
-            )
-
-    def hacer_hasta(self):
-        condicion, ok = QInputDialog.getText(
-            None, "Hacer Hasta", "Ingrese la condición (ej: x == 0):"
-        )
-        if ok and condicion:
-            self.textEdit.insertPlainText(
-                f"\t   hacer hasta ({condicion}): \n\t\t...\n"
+                f"\t   repetir si ({condicion}) ejecutar: \n\t...\n\t   fin repetir\n"
             )
 
     def definir_funcion(self):
@@ -416,6 +426,7 @@ class Ui_MainWindow(object):
         font = self.textEdit.font()
         font.setPointSize(font.pointSize() + 1)
         self.textEdit.setFont(font)
+
     def reducir_fuente(self):
         font = self.textEdit.font()
         font.setPointSize(font.pointSize() - 1)
@@ -428,7 +439,6 @@ class Ui_MainWindow(object):
         codigo = self.textEdit.toPlainText()
         self.ui.setCodigo(codigo)
         self.exec.show()
-
 
 if __name__ == "__main__":
     import sys

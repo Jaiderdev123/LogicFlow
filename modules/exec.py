@@ -155,9 +155,7 @@ class Ui_Ejecucion(object):
         icon2.addFile(u":/icons/icons/detener.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btnParar.setIcon(icon2)
         self.btnParar.setIconSize(QSize(50, 50))
-
         self.verticalLayout.addWidget(self.btnParar)
-
         # self.verCodigoJS = QPushButton(self.verticalLayoutWidget)
         # self.verCodigoJS.setObjectName(u"verCodigoJS")
         # self.verCodigoJS.setCursor(QCursor(Qt.OpenHandCursor))

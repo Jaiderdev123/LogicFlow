@@ -2,7 +2,6 @@ import js2py
 
 class JavaScriptExecutor:
     def __init__(self):
-        # Crear un contexto de ejecución persistente (opcional)
         self.contexto = js2py.EvalJs()
 
     def ejecutar_codigo(self, codigo_js):
@@ -31,5 +30,3 @@ if __name__ == "__main__":
 
     resultado = ejecutor.ejecutar_codigo(codigo_js)
     print("Resultado:", resultado)
-
-    
