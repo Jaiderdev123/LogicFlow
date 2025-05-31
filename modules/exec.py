@@ -187,61 +187,46 @@ class Ui_Ejecucion(object):
         self.entrada.setPlaceholderText(QCoreApplication.translate("Ejecucion", u"Ingrese datos aquí...", None))
 
     def setCodigo(self, codigo):
-        """Establece el código a ejecutar"""
         Ui_Ejecucion.codigo = codigo
         self.chat_output.clear()
         self.mostrar_sistema("Código cargado. Presione el botón Play para ejecutar.")
 
     def mostrar_sistema(self, mensaje):
-        """Muestra un mensaje del sistema en el chat"""
         self.chat_output.append(f'<span style="color: gray;"># {mensaje}</span>')
         self.auto_scroll()
         
     def mostrar_salida(self, mensaje):
-        """Muestra una salida del programa en el chat"""
         self.chat_output.append(f'<span style="color: blue;">{mensaje}</span>')
         self.auto_scroll()
         
     def mostrar_prompt(self, mensaje):
-        """Muestra un mensaje de solicitud de entrada en el chat"""
         self.chat_output.append(f'<span style="color: green;">{mensaje}</span>')
         self.auto_scroll()
         
     def mostrar_entrada(self, mensaje):
-        """Muestra la entrada del usuario en el chat"""
         self.chat_output.append(f'<span style="color: purple;">{mensaje}</span>')
         self.auto_scroll()
     
     def auto_scroll(self):
-        """Desplaza automáticamente al final del chat"""
         self.chat_output.verticalScrollBar().setValue(
             self.chat_output.verticalScrollBar().maximum()
         )
 
     def ejecutar_codigo(self):
-        """Inicia la ejecución del código"""
         if not self.ejecucion_activa and Ui_Ejecucion.codigo:
             self.ejecucion_activa = True
             self.chat_output.clear()
             self.mostrar_sistema("Iniciando ejecución...")
-            
-            # Crear el compilador para chat
             self.compilador = CompiladorChat(self)
-            
-            # Redirigir stdout a nuestro widget
             self.stdout_redirector = OutputRedirector(self.chat_output)
             sys.stdout = self.stdout_redirector
-            
-            # Crear un hilo para ejecutar el código sin bloquear la interfaz
             self.thread = threading.Thread(target=self.ejecutar_en_hilo)
             self.thread.daemon = True
             self.thread.start()
             
     def ejecutar_en_hilo(self):
-        """Ejecuta el código en un hilo separado"""
         try:
             self.compilador.ejecutar(Ui_Ejecucion.codigo)
-            # Si no está esperando entrada, finalizar
             if not self.compilador.esperando_entrada:
                 self.finalizar_ejecucion()
         except Exception as e:
@@ -249,7 +234,6 @@ class Ui_Ejecucion(object):
             self.finalizar_ejecucion()
             
     def enviar_entrada(self):
-        """Procesa la entrada del usuario"""
         texto = self.entrada.text()
         if not texto:
             return
@@ -262,13 +246,11 @@ class Ui_Ejecucion(object):
             self.mostrar_sistema("No hay una solicitud de entrada activa.")
             
     def detener_ejecucion(self):
-        """Detiene la ejecución del código"""
         if self.ejecucion_activa:
             self.mostrar_sistema("Ejecución detenida por el usuario.")
             self.finalizar_ejecucion()
             
     def finalizar_ejecucion(self):
-        """Finaliza la ejecución y restaura el estado"""
         self.ejecucion_activa = False
         # Restaurar stdout
         if hasattr(self, 'stdout_redirector'):

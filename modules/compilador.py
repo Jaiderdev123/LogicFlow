@@ -12,7 +12,7 @@ class CompiladorError(Exception):
 class Compilador:
     def __init__(self):
         self.variables = {}
-        self.variables_tipo = {}  # Para mantener registro del tipo esperado de cada variable
+        self.variables_tipo = {}  
         self.functions = {}
         self.indentacion = 0
         self.return_value = None
@@ -41,8 +41,6 @@ class Compilador:
         valor = input(f'  ' * self.indentacion)
         try:
             valor_parseado = self.parse_valor(valor)
-            
-            # Validación de tipo si se ha declarado un tipo específico
             if tipo_esperado and not self.validar_tipo(valor_parseado, tipo_esperado):
                 tipo_actual = type(valor_parseado).__name__
                 raise CompiladorError(f"Error de tipo: Se esperaba {tipo_esperado} pero se ingresó {tipo_actual} ({valor})")
@@ -61,7 +59,7 @@ class Compilador:
             return isinstance(valor, str)
         elif tipo_esperado == 'booleano':
             return isinstance(valor, bool)
-        return True  # Si no hay tipo específico, cualquier valor es válido
+        return True 
 
     def parse_valor(self, valor):
         """Convierte el valor al tipo adecuado"""
@@ -154,9 +152,6 @@ class Compilador:
                     pass
                 elif linea.startswith('repetir si ('): 
                     i = self.procesar_repetir_si(lineas, i)
-                    continue
-                elif linea.startswith('hacer hasta ('):  
-                    i = self.procesar_hacer_hasta(lineas, i)
                     continue
                 elif linea.startswith('definir '):
                     i = self.procesar_definir_funcion(lineas, i)
@@ -384,14 +379,6 @@ class Compilador:
         except Exception as e:
             raise CompiladorError(f"Error en estructura condicional: {str(e)}", linea_num)
 
-    def procesar_retorno(self, linea, linea_num):
-        """Procesa instrucción retornar"""
-        try:
-            expresion = linea.split('retornar')[1].strip()
-            self.return_value = self.evaluar_expresion(expresion)
-        except Exception as e:
-            raise CompiladorError(f"Error al procesar retorno: {str(e)}", linea_num)
-
     def procesar_asignacion(self, linea, linea_num):
         """Procesa asignación de variables"""
         try:
@@ -444,38 +431,6 @@ class Compilador:
             return eval(expresion, {"__builtins__": {}}, {})
         except Exception as e:
             return expresion
-
-    def procesar_definir_funcion(self, lineas, indice):
-        """Procesa definición de función"""
-        linea_num = indice + 1
-        try:
-            linea = lineas[indice]
-            match = re.search(r'definir (\w+)\((.*)\):', linea)
-            if not match:
-                match = re.search(r'definir (\w+)\((.*)\)', linea)
-                if not match:
-                    raise CompiladorError(f"Sintaxis incorrecta en definir función: {linea}", linea_num)
-            
-            nombre_func = match.group(1)
-            params = [p.strip() for p in match.group(2).split(',') if p.strip()]
-            
-            try:
-                fin_definir = self.encontrar_fin(lineas, indice, 'fin definir')
-            except Exception as e:
-                raise CompiladorError(f"Bloque 'definir' sin 'fin definir' correspondiente", linea_num)
-                
-            cuerpo = lineas[indice+1:fin_definir]
-            
-            self.functions[nombre_func] = {
-                'params': params,
-                'body': cuerpo
-            }
-            
-            return fin_definir + 1
-        except CompiladorError as e:
-            raise e
-        except Exception as e:
-            raise CompiladorError(f"Error al definir función: {str(e)}", linea_num)
 
     def procesar_llamada_funcion(self, linea, linea_num):
         """Procesa llamada a función"""
@@ -625,56 +580,6 @@ class Compilador:
             raise e
         except Exception as e:
             raise CompiladorError(f"Error en bucle repetir si: {str(e)}", linea_num)
-
-    def procesar_hacer_hasta(self, lineas, indice):
-        """Procesa estructura hacer hasta (do-while)"""
-        linea_num = indice + 1
-        try:
-            linea = lineas[indice]
-            
-            # Verificar sintaxis
-            match = re.search(r'hacer\s+hasta\s*\((.*)\)\s*:', linea)
-            if not match:
-                raise CompiladorError("Sintaxis incorrecta en bucle hacer hasta", linea_num)
-                
-            # Extraer condición
-            condicion = linea[linea.find("(")+1:linea.rfind(")")]
-            # Reemplazar operadores lógicos
-            condicion = condicion.replace(" y ", " and ").replace(" o ", " or ")
-            
-            inicio_bloque = indice + 1
-            try:
-                fin_bloque = self.encontrar_fin(lineas, inicio_bloque, 'fin hacer')
-            except Exception as e:
-                raise CompiladorError(f"Bloque 'hacer hasta' sin 'fin hacer' correspondiente", linea_num)
-                
-            iteraciones = 0
-            max_iteraciones = 10000  # Limitar número de iteraciones para evitar bucles infinitos
-            
-            while True:
-                iteraciones += 1
-                if iteraciones > max_iteraciones:
-                    raise CompiladorError(f"Posible bucle infinito detectado (más de {max_iteraciones} iteraciones)", linea_num)
-                
-                self.indentacion += 1
-                for i in range(inicio_bloque, fin_bloque):
-                    if lineas[i].strip() and lineas[i].strip() != 'fin hacer':
-                        self.ejecutar([lineas[i]])
-                self.indentacion -= 1
-                
-                try:
-                    resultado_condicion = self.evaluar_expresion(condicion)
-                except Exception as e:
-                    raise CompiladorError(f"Error al evaluar condición del bucle: {str(e)}", linea_num)
-                
-                if resultado_condicion:
-                    break
-            
-            return fin_bloque + 1
-        except CompiladorError as e:
-            raise e
-        except Exception as e:
-            raise CompiladorError(f"Error en bucle hacer hasta: {str(e)}", linea_num)
 
     def ejecutar_bloque(self, lineas, inicio, fin):
         """Ejecuta un bloque de código"""

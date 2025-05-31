@@ -399,22 +399,8 @@ class Ui_MainWindow(object):
         )
         if ok and condicion:
             self.textEdit.insertPlainText(
-                f"\t   repetir si ({condicion}) ejecutar: \n\t...\n\t   fin repetir\n"
+                f"\trepetir si ({condicion}) ejecutar:\n \t\t...\n \tfin repetir\n"
             )
-
-    def definir_funcion(self):
-        nombre, ok1 = QInputDialog.getText(
-            None, "Definir Función", "Nombre de la función:"
-        )
-        if ok1 and nombre:
-            parametros, ok2 = QInputDialog.getText(
-                None, "Parámetros", "Ingrese los parámetros (separados por comas):"
-            )
-            if ok2:
-                params = parametros if parametros else ""
-                self.textEdit.insertPlainText(
-                    f"\t   definir {nombre}({params}): \n\t...\n"
-                )
 
     def traducir_codigo(self, codigo):
         codigo = self.textEdit.toPlainText()
