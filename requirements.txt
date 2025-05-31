@@ -1,0 +1,6 @@
+PySide6
+re
+sys
+traceback
+threading
+io
