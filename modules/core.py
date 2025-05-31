@@ -45,39 +45,24 @@ class TraductorJS:
         # Leer entrada
         elif linea.startswith("leer("):
             self.procesar_leer(linea)
-            
         # Asignación
         elif "=" in linea and not "==" in linea and not "!=" in linea and not "<=" in linea and not ">=" in linea:
             self.procesar_asignacion(linea)
-            
         # Condicional if
         elif linea.startswith("si ("):
             return self.procesar_condicional(lineas, indice)
-            
         # Condicional else
         elif linea == "si no:":
             self.procesar_else()
-            
         # Bucle while
         elif linea.startswith("repetir si ("):
             return self.procesar_while(lineas, indice)
-            
-        # Bucle do-while
-        elif linea.startswith("hacer hasta ("):
-            return self.procesar_do_while(lineas, indice)
-            
-        # Definición de función
-        elif linea.startswith("definir "):
-            return self.procesar_funcion(lineas, indice)
-            
         # Retorno de función
         elif linea.startswith("retornar "):
             self.procesar_retorno(linea)
-            
         # Verificar si es el final de un bloque
         elif linea in ["fin si", "fin repetir", "fin hacer", "fin definir"]:
             self.cerrar_bloque(self.bloques_abiertos.pop() if self.bloques_abiertos else None)
-            
         return indice + 1
     
     def procesar_declaracion(self, linea):
@@ -163,6 +148,7 @@ class TraductorJS:
             return siguiente_indice + 1
             
         return siguiente_indice
+    
     def procesar_else(self):
         """Procesa una estructura condicional else."""
         self.indentacion -= 1
@@ -198,54 +184,6 @@ class TraductorJS:
         # Si no se encontró 'fin repetir', solo cerrar el bloque
         self.indentacion -= 1
         self.agregar_linea("}")
-        return siguiente_indice
-    
-    def procesar_do_while(self, lineas, indice):
-        """Procesa un bucle do-while."""
-        linea = lineas[indice].strip()
-        # Extraer condición
-        condicion = linea[linea.find("(")+1:linea.rfind(")")]
-        # Reemplazar operadores lógicos
-        condicion = condicion.replace(" y ", " && ").replace(" o ", " || ")
-        self.agregar_linea("do {")
-        self.indentacion += 1
-        self.bloques_abiertos.append("do_while")
-        # Procesar el bloque del do-while
-        siguiente_indice = indice + 1
-        while siguiente_indice < len(lineas) and lineas[siguiente_indice].strip() != "fin hacer":
-            siguiente_indice = self.procesar_linea(lineas, siguiente_indice)
-        # Si encontramos el fin del bloque do-while, cerrarlo
-        if siguiente_indice < len(lineas) and lineas[siguiente_indice].strip() == "fin hacer":
-            if "do_while" in self.bloques_abiertos:
-                self.bloques_abiertos.remove("do_while")
-            self.indentacion -= 1
-            self.agregar_linea(f"}} while ({condicion});")
-            return siguiente_indice + 1
-        return siguiente_indice
-    
-    def procesar_funcion(self, lineas, indice):
-        """Procesa una definición de función."""
-        linea = lineas[indice].strip()
-        
-        # Extraer nombre y parámetros
-        nombre_func = linea[linea.find(" ")+1:linea.find("(")]
-        params = linea[linea.find("(")+1:linea.rfind(")")]
-        
-        self.agregar_linea(f"function {nombre_func}({params}) {{")
-        self.indentacion += 1
-        self.funciones[nombre_func] = params.split(",") if params else []
-        self.bloques_abiertos.append("function")
-        
-        # Procesar el bloque de la función
-        siguiente_indice = indice + 1
-        while siguiente_indice < len(lineas) and not lineas[siguiente_indice].strip().startswith("retornar "):
-            siguiente_indice = self.procesar_linea(lineas, siguiente_indice)
-        
-        # Si encontramos un retorno, procesarlo
-        if siguiente_indice < len(lineas) and lineas[siguiente_indice].strip().startswith("retornar "):
-            self.procesar_retorno(lineas[siguiente_indice].strip())
-            return siguiente_indice + 1
-            
         return siguiente_indice
     
     def procesar_retorno(self, linea):
