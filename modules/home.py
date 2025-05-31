@@ -252,7 +252,6 @@ class Ui_MainWindow(object):
         self.btnAsignar.clicked.connect(self.asignar)
         self.btnCondicion.clicked.connect(self.establecer_condicion)
         self.btnRepetirSi.clicked.connect(self.repetir_si)
-        self.btnDefinirFuncion.clicked.connect(self.definir_funcion)
         self.btnImportar.clicked.connect(self.importar_archivo)
         self.btnExportar.clicked.connect(self.exportar_archivo)
         self.verCodigoJS.clicked.connect(self.abrir_codigo)
